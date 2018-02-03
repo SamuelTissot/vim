@@ -1,4 +1,7 @@
 set nocompatible              						"We want the latest Vim settings/options.
+"
+" Splasm screen
+so ~/.vim/splash.vim
 
 " Vundle
 " install by: git clone https://github.com/VundleVim/Vundle.vim.git " ~/.vim/bundle/Vundle.vim
@@ -6,7 +9,6 @@ so ~/.vim/plugins.vim
 
 syntax enable
 set backspace=indent,eol,start                                          "Make backspace behave like every other editor.
-let mapleader = "\<Space>" 						 "The default is \, but a SPACE is much better.
 set number								"Let's activate line numbers.
 set noerrorbells visualbell t_vb=               			"No damn bells!
 set autowriteall                                                        "Automatically write the file when switching buffers.
@@ -19,27 +21,47 @@ set ignorecase                                                        " ignre ca
 set tags=tags;                                                        " for ctags
 set updatetime=100                                                    " update time for that status line
 
-" ------- vim ignore -------------"
+" vim ignore
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip                              " MacOSX/Linux
 
-
-"-------------Visuals--------------"
+" Visuals
 set t_CO=256								"Use 256 colors. This is useful for Terminal Vim.
 set background=dark " Setting dark mode
 set guifont=Inconsolata:h14						"Set the default font family and size.
 set guioptions-=e							"We don't want Gui tabs.
 set linespace=13   						        "Macvim-specific line-height.
-
 if (has("termguicolors"))
     set termguicolors
 endif
-
 if (has("macligatures"))
     set macligatures							"We want pretty symbols, when available.
 endif
 
+set guioptions-=l                                                       "Disable Gui scrollbars.
+set guioptions-=L
+set guioptions-=r
+set guioptions-=R
+
+"Get rid of ugly split borders.
+hi vertsplit guifg=bg guibg=bg
+
+" Search
+set hlsearch								"Highlight all matched terms.
+set incsearch								"Incrementally highlight, as we type.
+
+" Split Management
+set splitbelow 								"Make splits default to below...
+set splitright								"And to the right. This feels more natural.
+
+
+
+
+"-----------------------Theme---------------------------"
+"-----------------------Theme---------------------------"
+"-----------------------Theme---------------------------"
+
 " apprentice
-"colorscheme apprentice 
+" colorscheme apprentice 
 
 " two_firewatch
 "let g:two_firewatch_italics=1
@@ -52,74 +74,108 @@ let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 let g:deus_termcolors=256
 
 
-set guioptions-=l                                                       "Disable Gui scrollbars.
-set guioptions-=L
-set guioptions-=r
-set guioptions-=R
-
-
-"Get rid of ugly split borders.
-hi vertsplit guifg=bg guibg=bg
 
 
 
+"-----------------------Mappings------------------------"
+"-----------------------Mappings------------------------"
+"-----------------------Mappings------------------------"
 
-"-------------Search--------------"
-set hlsearch								"Highlight all matched terms.
-set incsearch								"Incrementally highlight, as we type.
+" let mapleader = "\<Space>" 						 "The default is \, but a SPACE is much better.
+nmap <Space> <Leader>
+
+"/
+"/ VIM Configs 
+"/
+"Make it easy to edit the Vimrc file.
+nmap <Leader>ev :tabedit $MYVIMRC<cr>
+nmap <Leader>es :e ~/.vim/snippets/
+nmap <leader>ep :tabedit ~/.vim/plugins.vim<cr>
 
 
-
-
-"-------------Split Management--------------"
-set splitbelow 								"Make splits default to below...
-set splitright								"And to the right. This feels more natural.
-
-"We'll set simpler mappings to switch between splits.
+"/
+"/ Split Management
+"/
 nmap <C-J> <C-W><C-J>
 nmap <C-K> <C-W><C-K>
 nmap <C-H> <C-W><C-H>
 nmap <C-L> <C-W><C-L>
 
+"/
+"/ Navigation management
+"/
 map <C-n> :cnext<CR>
 map <C-m> :cprevious<CR>
 nnoremap <leader>a :cclose<CR>
 
+"/
+"/ Movement mappings
+"/
+inoremap ;; <Esc>A;<Esc>
+imap jj <Esc>
 
-"-------------Mappings--------------"
-
-"Make it easy to edit the Vimrc file.
-nmap <Leader>ev :tabedit $MYVIMRC<cr>
-nmap <Leader>es :e ~/.vim/snippets/
-nmap <leader>ep :tabedit ~/.vim/plugins.vim<cr>
+"/
+"/ Visual mappings
+"/
 "Add simple highlight removal.
 nmap <Leader><space> :nohlsearch<cr>
 
+"/
+"/ Ctags
+"/
 "Quickly browse to any tag/symbol in the project.
 "Tip: run ctags -R to regenerated the index.
 nmap <Leader>f :tag<space>
 nmap <Leader>gt :!ctags 
-"Sort PHP use statements
-"http://stackoverflow.com/questions/11531073/how-do-you-sort-a-range-of-lines-by-length
-vmap <Leader>su ! awk '{ print length(), $0 \| "sort -n \| cut -d\\  -f2-" }'<cr>
+
+"/
+"/ CtrlP
+"/
+nmap <Leader>vb :CtrlPMRUFiles<cr>
+nmap <Leader>vt :CtrlPBufTag<cr>
+let g:ctrlp_map = '<Leader>vf'                                  " same as nmap <Leader>vf :CtrlPMRUFiles<cr>
+let g:ctrlp_cmd = 'CtrlP'
+
+"/
+"/ NERDTree
+"/
+nmap <Leader>nt :NERDTreeToggle<cr>
+nmap <Leader>nf :NERDTreeFind<cr>
+
+"/
+"/ PHP mappings
+"/
+" run code
+autocmd FileType php map <Leader>r :!php -f %<cr>
 " php lint
 nmap <Leader>pl :w<cr>:!php -l %<cr>
 
+function! IPhpInsertUse()
+    call PhpInsertUse()
+    call feedkeys('a',  'n')
+endfunction
+autocmd FileType php inoremap <Leader>n <Esc>:call IPhpInsertUse()<CR>
+autocmd FileType php noremap <Leader>n :call PhpInsertUse()<CR>
 
+function! IPhpExpandClass()
+    call PhpExpandClass()
+    call feedkeys('a', 'n')
+endfunction
+autocmd FileType php inoremap <Leader>nf <Esc>:call IPhpExpandClass()<CR>
+autocmd FileType php noremap <Leader>nf :call PhpExpandClass()<CR>
+"Sort PHP use statements
+"http://stackoverflow.com/questions/11531073/how-do-you-sort-a-range-of-lines-by-length
+vmap <Leader>su ! awk '{ print length(), $0 \| "sort -n \| cut -d\\  -f2-" }'<cr>
 
-inoremap ;; <Esc>A;<Esc>
-imap jj <Esc>
+"/
+"/ JS mappings 
+"/
+" run code
+autocmd Filetype js nmap <Leader>r :!node %<cr>
 
-
-" YAML
-autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
-
-
-
-"-------------Plugins--------------"
-"
-
-" Vim-go
+"/
+"/ vim-go
+"/
 " run :GoBuild or :GoTestCompile based on the go file
 function! s:build_go_files()
   let l:file = expand('%')
@@ -134,9 +190,34 @@ autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
 autocmd FileType go nmap <leader>r  <Plug>(go-run)
 autocmd FileType go nmap <Leader>i <Plug>(go-info)
 
+
+
+"/
+"/ vim-php-cs-fixer.vim
+"/
+nnoremap <silent><leader>pf :call PhpCsFixerFixFile()<CR>
+
+"/
+"/ pdv
+"/
+nnoremap <leader>d :call pdv#DocumentWithSnip()<CR>
+
+
+
+"-----------------------Plugins------------------------"
+"-----------------------Plugins------------------------"
+"-----------------------Plugins------------------------"
+
+"/
+"/ YAML
+"/
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+
+"/
+"/ VIM-GO
+"/
 let g:go_fmt_command = "goimports"
 let g:go_auto_type_info = 1
-
 " beautify (may slow down vim)
 let g:go_highlight_types = 1
 let g:go_highlight_functions = 1
@@ -145,6 +226,8 @@ let g:go_highlight_methods = 1
 "/
 "/ CtrlP
 "/
+" igmore file in .gitignore
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/]\.?(git|hg|svn|node_modules|vendor)$',
   \ 'file': '\v\.(exe|so|dll)$',
@@ -153,22 +236,22 @@ let g:ctrlp_custom_ignore = {
 let g:ctrlp_match_window = 'top,order:ttb,min:1,max:30,results:30'
 let g:ctrlp_working_path_mode = '0'
 
-nmap <C-r> :CtrlPBufTag<cr>
-nmap <C-e> :CtrlPMRUFiles<cr>
-
 "/
 "/ NERDTree
 "/
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
+let NERDTreeAutoDeleteBuffer = 1
 let NERDTreeHijackNetrw = 0
-
-nmap ¡ :NERDTreeToggle<cr>
-nmap ™ :NERDTreeFind<cr>
+" quite nerdtree when opening a file
+let NERDTreeQuitOnOpen = 1
+" automatically close a tab if the only remaining window is NerdTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 "/
 "/ Greplace.vim
 "/
 set grepprg=ag								"We want to use Ag for the search.
-
 let g:grep_cmd_opts = '--line-numbers --noheading'
 
 "/
@@ -176,14 +259,10 @@ let g:grep_cmd_opts = '--line-numbers --noheading'
 "/
 let g:php_cs_fixer_level = "psr2"  
 
-nnoremap <silent><leader>pf :call PhpCsFixerFixFile()<CR>
-
 "/
 "/ pdv
 "/
 let g:pdv_template_dir = $HOME ."/.vim/bundle/pdv/templates_snip"
-
-nnoremap <leader>d :call pdv#DocumentWithSnip()<CR>
 
 "/
 "/ Ultisnips
@@ -201,32 +280,12 @@ let vim_markdown_preview_github=1
 
 "-------------Auto-Commands--------------"
 "Automatically source the Vimrc file on save.
-autocmd! bufwritepost .vimrc source %
-" augroup autosourcing
-" 	autocmd!
-" 	autocmd BufWritePost .vim/vimrc source %
-" augroup END
+if has("autocmd")
+  autocmd bufwritepost .vimrc source $MYVIMRC
+endif
 
 
  
-"------------- RUN CODE --------------"
-nmap <Leader>rj :!node %<cr>
-nmap <Leader>rp :!php -f %<cr>
-
-"-------------Functions--------------"
-function! IPhpInsertUse()
-    call PhpInsertUse()
-    call feedkeys('a',  'n')
-endfunction
-autocmd FileType php inoremap <Leader>n <Esc>:call IPhpInsertUse()<CR>
-autocmd FileType php noremap <Leader>n :call PhpInsertUse()<CR>
-
-function! IPhpExpandClass()
-    call PhpExpandClass()
-    call feedkeys('a', 'n')
-endfunction
-autocmd FileType php inoremap <Leader>nf <Esc>:call IPhpExpandClass()<CR>
-autocmd FileType php noremap <Leader>nf :call PhpExpandClass()<CR>
 
 
 
