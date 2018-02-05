@@ -10,6 +10,7 @@ so ~/.vim/plugins.vim
 syntax enable
 set backspace=indent,eol,start                                          "Make backspace behave like every other editor.
 set number								"Let's activate line numbers.
+set relativenumber
 set noerrorbells visualbell t_vb=               			"No damn bells!
 set autowriteall                                                        "Automatically write the file when switching buffers.
 set complete=.,w,b,u 							"Set our desired autocompletion matching.
@@ -101,6 +102,7 @@ nmap <C-K> <C-W><C-K>
 nmap <C-H> <C-W><C-H>
 nmap <C-L> <C-W><C-L>
 
+
 "/
 "/ Navigation management
 "/
@@ -131,16 +133,11 @@ nmap <Leader>gt :!ctags
 "/
 "/ CtrlP
 "/
-nmap <Leader>vb :CtrlPMRUFiles<cr>
-nmap <Leader>vt :CtrlPBufTag<cr>
-let g:ctrlp_map = '<Leader>vf'                                  " same as nmap <Leader>vf :CtrlPMRUFiles<cr>
+nmap <Leader>cb :CtrlPMRUFiles<cr>
+nmap <Leader>ct :CtrlPBufTag<cr>
+let g:ctrlp_map = '<Leader>cf'                                  " same as nmap <Leader>vf :CtrlPMRUFiles<cr>
 let g:ctrlp_cmd = 'CtrlP'
 
-"/
-"/ NERDTree
-"/
-nmap <Leader>nt :NERDTreeToggle<cr>
-nmap <Leader>nf :NERDTreeFind<cr>
 
 "/
 "/ PHP mappings
@@ -166,6 +163,9 @@ autocmd FileType php noremap <Leader>nf :call PhpExpandClass()<CR>
 "Sort PHP use statements
 "http://stackoverflow.com/questions/11531073/how-do-you-sort-a-range-of-lines-by-length
 vmap <Leader>su ! awk '{ print length(), $0 \| "sort -n \| cut -d\\  -f2-" }'<cr>
+"/ vim-php-cs-fixer.vim 
+nnoremap <silent><leader>pf :call PhpCsFixerFixFile()<CR>
+
 
 "/
 "/ JS mappings 
@@ -193,11 +193,6 @@ autocmd FileType go nmap <Leader>i <Plug>(go-info)
 
 
 "/
-"/ vim-php-cs-fixer.vim
-"/
-nnoremap <silent><leader>pf :call PhpCsFixerFixFile()<CR>
-
-"/
 "/ pdv
 "/
 nnoremap <leader>d :call pdv#DocumentWithSnip()<CR>
@@ -212,6 +207,14 @@ nnoremap <leader>d :call pdv#DocumentWithSnip()<CR>
 "/ YAML
 "/
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+
+
+"/ 
+"/ NERTW
+"/t 
+"let g:netrw_banner = 0
+"let g:netrw_browse_split = 4
+let g:netrw_winsize = 25
 
 "/
 "/ VIM-GO
@@ -235,18 +238,6 @@ let g:ctrlp_custom_ignore = {
   \ }
 let g:ctrlp_match_window = 'top,order:ttb,min:1,max:30,results:30'
 let g:ctrlp_working_path_mode = '0'
-
-"/
-"/ NERDTree
-"/
-let NERDTreeMinimalUI = 1
-let NERDTreeDirArrows = 1
-let NERDTreeAutoDeleteBuffer = 1
-let NERDTreeHijackNetrw = 0
-" quite nerdtree when opening a file
-let NERDTreeQuitOnOpen = 1
-" automatically close a tab if the only remaining window is NerdTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 "/
 "/ Greplace.vim
@@ -308,4 +299,10 @@ endif
 "   replace instance in buffer ( :%s/ORIGINAL/REPLACEMENT/options )
 "   :Greplace
 "
-"   
+"  NEWTRW
+" :e.	:edit .	at current working directory
+" :sp.	:split .	in split at current working directory
+" :vsplit .	in vertical split at current working directory
+" :Explore	at directory of current file
+" :Sexplore	in split at directory of current file
+" :Vexplore	in vertical split at directory of current file

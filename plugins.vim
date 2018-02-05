@@ -13,7 +13,6 @@ Plugin 'romainl/Apprentice'
 Plugin 'fatih/molokai'
 Plugin 'nightsense/simplifysimplify'
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'scrooloose/nerdtree'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'rking/ag.vim'
 Plugin 'skwp/greplace.vim'
@@ -34,7 +33,9 @@ Plugin 'tobyS/pdv'
 Plugin 'SirVer/ultisnips'
 Plugin 'evidens/vim-twig'
 Plugin 'fatih/vim-go'
+" plugins below the line may really impact load time
 Plugin 'sheerun/vim-polyglot'
+Plugin 'vim-syntastic/syntastic'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
