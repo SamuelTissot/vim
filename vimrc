@@ -104,6 +104,16 @@ nmap <C-L> <C-W><C-L>
 
 
 "/
+"/ NOTES 
+"/
+nmap <Leader>n :tabedit $NOTES<cr>
+
+"/
+"/ SRACTCH 
+"/
+nmap <Leader>s :tabedit $SCRATCH<cr>
+
+"/
 "/ Navigation management
 "/
 map <C-n> :cnext<CR>
@@ -151,15 +161,15 @@ function! IPhpInsertUse()
     call PhpInsertUse()
     call feedkeys('a',  'n')
 endfunction
-autocmd FileType php inoremap <Leader>n <Esc>:call IPhpInsertUse()<CR>
-autocmd FileType php noremap <Leader>n :call PhpInsertUse()<CR>
+autocmd FileType php inoremap <Leader>pu <Esc>:call IPhpInsertUse()<CR>
+autocmd FileType php noremap <Leader>pu :call PhpInsertUse()<CR>
 
 function! IPhpExpandClass()
     call PhpExpandClass()
     call feedkeys('a', 'n')
 endfunction
-autocmd FileType php inoremap <Leader>nf <Esc>:call IPhpExpandClass()<CR>
-autocmd FileType php noremap <Leader>nf :call PhpExpandClass()<CR>
+autocmd FileType php inoremap <Leader>pc <Esc>:call IPhpExpandClass()<CR>
+autocmd FileType php noremap <Leader>pc :call PhpExpandClass()<CR>
 "Sort PHP use statements
 "http://stackoverflow.com/questions/11531073/how-do-you-sort-a-range-of-lines-by-length
 vmap <Leader>su ! awk '{ print length(), $0 \| "sort -n \| cut -d\\  -f2-" }'<cr>
