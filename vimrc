@@ -19,11 +19,15 @@ set expandtab
 set softtabstop=4
 set shiftwidth=4
 set ignorecase                                                        " ignre case in search
-set tags=tags;                                                        " for ctags
+"set tags=tags;                                                        " for ctags
 set updatetime=100                                                    " update time for that status line
 
 " vim ignore
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip                              " MacOSX/Linux
+set wildignore+=*.a,*.o
+set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
+set wildignore+=.DS_Store,.git,.hg,.svn
+set wildignore+=*~,*.swp,*.tmp
 
 " Visuals
 set t_CO=256								"Use 256 colors. This is useful for Terminal Vim.
@@ -127,6 +131,11 @@ inoremap ;; <Esc>A;<Esc>
 imap jj <Esc>
 
 "/
+"/ Operation Mappings
+"/
+nnoremap <Leader>rw :%s/\<<C-r><C-w>\>//g<Left><Left>
+
+"/
 "/ Visual mappings
 "/
 "Add simple highlight removal.
@@ -174,7 +183,7 @@ autocmd FileType php noremap <Leader>pc :call PhpExpandClass()<CR>
 "http://stackoverflow.com/questions/11531073/how-do-you-sort-a-range-of-lines-by-length
 vmap <Leader>su ! awk '{ print length(), $0 \| "sort -n \| cut -d\\  -f2-" }'<cr>
 "/ vim-php-cs-fixer.vim 
-nnoremap <silent><leader>pf :call PhpCsFixerFixFile()<CR>
+nnoremap <silent><leader>pf :w \| call PhpCsFixerFixFile()<CR>
 
 
 "/
@@ -212,6 +221,14 @@ nnoremap <leader>d :call pdv#DocumentWithSnip()<CR>
 "-----------------------Plugins------------------------"
 "-----------------------Plugins------------------------"
 "-----------------------Plugins------------------------"
+
+"/
+"/ SYNTASTIC
+"/
+let g:syntastic_mode_map = {
+    \ "mode": "active",
+    \ "active_filetypes": [],
+    \ "passive_filetypes": ["go"] }
 
 "/
 "/ YAML
@@ -271,6 +288,15 @@ let g:pdv_template_dir = $HOME ."/.vim/bundle/pdv/templates_snip"
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+
+"/
+"/ VDEBUG
+"/
+let g:vdebug_options = {
+            \ 'break_on_open': 1,
+            \ 'path_maps': {'/var/www/html': '/Users/samuel.tissot/Sites/hq'},
+            \ 'port': '9000',
+            \ }
 
 "/
 "/ Markdown preview
