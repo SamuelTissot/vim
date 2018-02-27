@@ -1,4 +1,4 @@
-set nocompatible              						"We want the latest Vim settings/options.
+set nocompatible              						"pWe want the latest Vim settings/options.
 "
 " Splasm screen
 so ~/.vim/splash.vim
@@ -77,7 +77,8 @@ colorscheme deus
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 let g:deus_termcolors=256
-
+" airline
+let g:airline_theme='deus'
 
 
 
@@ -101,11 +102,33 @@ nmap <leader>ep :tabedit ~/.vim/plugins.vim<cr>
 "/
 "/ Split Management
 "/
-nmap <C-J> <C-W><C-J>
-nmap <C-K> <C-W><C-K>
-nmap <C-H> <C-W><C-H>
-nmap <C-L> <C-W><C-L>
+"To map <Esc> to exit terminal-mode: >
+tnoremap <Esc> <C-\><C-n>
 
+"To use `ALT+{h,j,k,l}` to navigate windows from any mode: >
+tnoremap <C-h> <C-\><C-N><C-w>h
+tnoremap <C-j> <C-\><C-N><C-w>j
+tnoremap <C-k> <C-\><C-N><C-w>k
+tnoremap <C-l> <C-\><C-N><C-w>l
+inoremap <C-h> <C-\><C-N><C-w>h
+inoremap <C-j> <C-\><C-N><C-w>j
+inoremap <C-k> <C-\><C-N><C-w>k
+inoremap <C-l> <C-\><C-N><C-w>l
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+"nmap <C-J> <C-W><C-J>
+"nmap <C-K> <C-W><C-K>
+"nmap <C-H> <C-W><C-H>
+"nmap <C-L> <C-W><C-L>
+function! FocusCurrentBuffer()
+  :w
+  :%bd!
+  :e#
+endfunction
+ 
+nmap <Leader>bf :call FocusCurrentBuffer()<CR>
 
 "/
 "/ NOTES 
@@ -120,9 +143,9 @@ nmap <Leader>s :tabedit $SCRATCH<cr>
 "/
 "/ Navigation management
 "/
-map <C-n> :cnext<CR>
-map <C-m> :cprevious<CR>
-nnoremap <leader>a :cclose<CR>
+map <Leader>qn :cnext<CR>
+map <Leader>qp :cprevious<CR>
+nnoremap <leader>qc :cclose<CR>
 
 "/
 "/ Movement mappings
@@ -146,15 +169,15 @@ nmap <Leader><space> :nohlsearch<cr>
 "/
 "Quickly browse to any tag/symbol in the project.
 "Tip: run ctags -R to regenerated the index.
-nmap <Leader>f :tag<space>
-nmap <Leader>gt :!ctags 
+nmap <Leader>tf :tag<space>
+nmap <Leader>tg :!ctags -R
 
 "/
 "/ CtrlP
 "/
-nmap <Leader>cb :CtrlPMRUFiles<cr>
-nmap <Leader>ct :CtrlPBufTag<cr>
-let g:ctrlp_map = '<Leader>cf'                                  " same as nmap <Leader>vf :CtrlPMRUFiles<cr>
+nmap <Leader>fb :CtrlPMRUFiles<cr>
+nmap <Leader>ft :CtrlPBufTag<cr>
+let g:ctrlp_map = '<Leader>ff'                                  " same as nmap <Leader>vf :CtrlPMRUFiles<cr>
 let g:ctrlp_cmd = 'CtrlP'
 
 
@@ -186,6 +209,7 @@ vmap <Leader>su ! awk '{ print length(), $0 \| "sort -n \| cut -d\\  -f2-" }'<cr
 nnoremap <silent><leader>pf :w \| call PhpCsFixerFixFile()<CR>
 
 
+
 "/
 "/ JS mappings 
 "/
@@ -210,6 +234,11 @@ autocmd FileType go nmap <leader>r  <Plug>(go-run)
 autocmd FileType go nmap <Leader>i <Plug>(go-info)
 
 
+"/
+"/ vim-godebug
+"/
+autocmd FileType go nmap <leader>dp :call GoToggleBreakpoint()
+autocmd FileType go nmap <leader>dr :call GoDebug()
 
 "/
 "/ pdv
@@ -225,6 +254,17 @@ nnoremap <leader>d :call pdv#DocumentWithSnip()<CR>
 "/
 "/ SYNTASTIC
 "/
+
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 0
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
+let g:syntastic_check_on_w = 1
+let g:syntastic_javascript_checkers = ["eslint", "jshint"]
 let g:syntastic_mode_map = {
     \ "mode": "active",
     \ "active_filetypes": [],
@@ -277,6 +317,21 @@ let g:grep_cmd_opts = '--line-numbers --noheading'
 "/
 let g:php_cs_fixer_level = "psr2"  
 
+
+"/
+"/ phpcd
+"/
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#min_pattern_length = 3
+let g:deoplete#ignore_sources = get(g:, 'deoplete#ignore_sources', {})  " for deoplete
+let g:deoplete#ignore_sources.php = ['omni']                            " for deoplete
+
+"/
+"/ deoplete
+"/
+"set runtimepath+=~/.vim/bundle/deoplete.nvim
+let g:deoplete#enable_at_startup = 1
+
 "/
 "/ pdv
 "/
@@ -289,14 +344,17 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
+
+
 "/
 "/ VDEBUG
 "/
 let g:vdebug_options = {
-            \ 'break_on_open': 1,
-            \ 'path_maps': {'/var/www/html': '/Users/samuel.tissot/Sites/hq'},
-            \ 'port': '9000',
-            \ }
+    \ 'break_on_open': 0,
+    \ 'path_maps': {'/var/www/html': '/Users/samuel.tissot/Sites/ocb'},
+    \ 'port': '9000',
+    \ }
+
 
 "/
 "/ Markdown preview
@@ -313,12 +371,49 @@ endif
 
 
  
+"-----------Special functionality---------"
+
+"/
+"/ CAPLOCK automatic
+"/
+" Execute 'lnoremap x X' and 'lnoremap X x' for each letter a-z.
+for c in range(char2nr('A'), char2nr('Z'))
+  execute 'lnoremap ' . nr2char(c+32) . ' ' . nr2char(c)
+  execute 'lnoremap ' . nr2char(c) . ' ' . nr2char(c+32)
+endfor
+" Kill the capslock when leaving insert mode.
+autocmd InsertLeave * set iminsert=0
+
+
+
+"/
+"/ Antidote
+"/
+function! CallAntidoteSpellCheck()
+  :w
+  call system("open -a /Applications/Antidote\\ 9.app ".bufname("%"))
+endfunction
+ 
+nmap <Leader>sc :call CallAntidoteSpellCheck()<CR>
+
+
+
+
+
+
+
 
 
 
 
 "-------------Tips and Reminders--------------"
 " - Press 'zz' to instantly center the line where the cursor is located.
+"
+"   DELETE ALL BUFFER EXEPT CURRENT
+"   :w | %db | e#
+"   - w write file
+"   - %bd close all buffer
+"   - edit current last buffer
 "
 "   SEARCH 
 "   -----
