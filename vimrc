@@ -7,6 +7,12 @@ so ~/.vim/splash.vim
 " install by: git clone https://github.com/VundleVim/Vundle.vim.git " ~/.vim/bundle/Vundle.vim
 so ~/.vim/plugins.vim
 
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
 syntax enable
 set backspace=indent,eol,start                                          "Make backspace behave like every other editor.
 set number								"Let's activate line numbers.
@@ -32,7 +38,7 @@ set wildignore+=*~,*.swp,*.tmp
 " Visuals
 set t_CO=256								"Use 256 colors. This is useful for Terminal Vim.
 set background=dark " Setting dark mode
-set guifont=Inconsolata:h14						"Set the default font family and size.
+set guifont=Inconsalata:h14						"Set the default font family and size.
 set guioptions-=e							"We don't want Gui tabs.
 set linespace=13   						        "Macvim-specific line-height.
 if (has("termguicolors"))
@@ -58,8 +64,31 @@ set incsearch								"Incrementally highlight, as we type.
 set splitbelow 								"Make splits default to below...
 set splitright								"And to the right. This feels more natural.
 
+" spelling
+setlocal spell spelllang=en_us
 
 
+
+
+"-----------------------term----------------------------"
+"-----------------------term----------------------------"
+"-----------------------term----------------------------"
+let g:terminal_color_0  = '#2e3436'
+let g:terminal_color_1  = '#cc0000'
+let g:terminal_color_2  = '#4e9a06'
+let g:terminal_color_3  = '#c4a000'
+let g:terminal_color_4  = '#3465a4'
+let g:terminal_color_5  = '#75507b'
+let g:terminal_color_6  = '#0b939b'
+let g:terminal_color_7  = '#d3d7cf'
+let g:terminal_color_8  = '#555753'
+let g:terminal_color_9  = '#ef2929'
+let g:terminal_color_10 = '#8ae234'
+let g:terminal_color_11 = '#fce94f'
+let g:terminal_color_12 = '#729fcf'
+let g:terminal_color_13 = '#ad7fa8'
+let g:terminal_color_14 = '#00f5e9'
+let g:terminal_color_15 = '#eeeeec'
 
 "-----------------------Theme---------------------------"
 "-----------------------Theme---------------------------"
@@ -69,8 +98,9 @@ set splitright								"And to the right. This feels more natural.
 " colorscheme apprentice 
 
 " two_firewatch
-"let g:two_firewatch_italics=1
-"colo two-firewatch
+" let g:two_firewatch_italics=1
+" colo two-firewatch
+" let g:airline_theme='twofirewatch'
 
 " deus
 colorscheme deus 
@@ -81,12 +111,10 @@ let g:deus_termcolors=256
 let g:airline_theme='deus'
 
 
-
-
 "-----------------------Mappings------------------------"
 "-----------------------Mappings------------------------"
 "-----------------------Mappings------------------------"
-
+"
 " let mapleader = "\<Space>" 						 "The default is \, but a SPACE is much better.
 nmap <Space> <Leader>
 
@@ -247,9 +275,21 @@ nnoremap <leader>d :call pdv#DocumentWithSnip()<CR>
 
 
 
+"/
+"/ jsdoc
+"/
+autocmd FileType javascript nmap <Leader>jd :JsDoc<cr>
+
+
 "-----------------------Plugins------------------------"
 "-----------------------Plugins------------------------"
 "-----------------------Plugins------------------------"
+
+
+"/
+"/ HARDTIME
+"/
+let g:hardtime_default_on = 1
 
 "/
 "/ SYNTASTIC
@@ -363,6 +403,16 @@ let g:vdebug_options = {
 let vim_markdown_preview_github=1
 
 
+
+"/
+"/ JSDOC
+"/
+
+let g:jsdoc_allow_input_prompt=1
+let g:jsdoc_input_description=1
+let g:jsdoc_enable_es6=1
+
+
 "-------------Auto-Commands--------------"
 "Automatically source the Vimrc file on save.
 if has("autocmd")
@@ -408,6 +458,25 @@ nmap <Leader>sc :call CallAntidoteSpellCheck()<CR>
 
 "-------------Tips and Reminders--------------"
 " - Press 'zz' to instantly center the line where the cursor is located.
+" 
+"
+"   VIM-FUGITIVE
+"   -------
+"   http://vimcasts.org/episodes/fugitive-vim-resolving-merge-conflicts-with-vimdiff/
+"   
+"   Gwrite adds the current file to the index, and if in a conflic merge will
+"   do a :only command
+"
+"   Gdiff | 3 way merge
+"   - dp : use 'dp' in either the target(left window) or Merge(right window) to use
+"   that version of the code.
+"   - diffput and diffget can also be used but needs an argument:
+"           //2 | filename | //3
+"   - diffup or diffupdate to refresh the difference hightligh
+"   - Gwrite : use the current buffer to override the working copy.
+"
+"
+"
 "
 "   DELETE ALL BUFFER EXEPT CURRENT
 "   :w | %db | e#
