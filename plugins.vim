@@ -15,7 +15,14 @@ Plug 'rakr/vim-two-firewatch'
 " Plug 'fatih/molokai'
 " Plug 'nightsense/simplifysimplify'
 Plug 'VundleVim/Vundle.vim'
-Plug 'ctrlpvim/ctrlp.vim'
+" Plug 'ctrlpvim/ctrlp.vim'
+" 
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
+"
+"DB
+Plug 'tpope/vim-db'
+"
 Plug 'rking/ag.vim'
 Plug 'skwp/greplace.vim'
 Plug 'MarcWeber/vim-addon-mw-utils'

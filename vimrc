@@ -27,7 +27,7 @@ set shiftwidth=4
 set ignorecase                                                        " ignre case in search
 "set tags=tags;                                                        " for ctags
 set updatetime=100                                                    " update time for that status line
-
+set mouse=a
 " vim ignore
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip                              " MacOSX/Linux
 set wildignore+=*.a,*.o
@@ -38,7 +38,7 @@ set wildignore+=*~,*.swp,*.tmp
 " Visuals
 set t_CO=256								"Use 256 colors. This is useful for Terminal Vim.
 set background=dark " Setting dark mode
-set guifont=Inconsalata:h14						"Set the default font family and size.
+set guifont=Inconsalata\ for\ powerline:h14						"Set the default font family and size.
 set guioptions-=e							"We don't want Gui tabs.
 set linespace=13   						        "Macvim-specific line-height.
 if (has("termguicolors"))
@@ -201,12 +201,38 @@ nmap <Leader>tf :tag<space>
 nmap <Leader>tg :!ctags -R
 
 "/
-"/ CtrlP
+"/ FZF
 "/
-nmap <Leader>fb :CtrlPMRUFiles<cr>
-nmap <Leader>ft :CtrlPBufTag<cr>
-let g:ctrlp_map = '<Leader>ff'                                  " same as nmap <Leader>vf :CtrlPMRUFiles<cr>
-let g:ctrlp_cmd = 'CtrlP'
+"Files [PATH]	    Files (similar to :FZF)
+" GFiles [OPTS]     Git files (git ls-files)
+" GFiles?	    Git files (git status)
+" Buffers	    Open buffers
+" Colors	    Color schemes
+" Ag [PATTERN]      ag search result (ALT-A to select all, ALT-D to deselect all)
+" Lines [QUERY]     Lines in loaded buffers
+" BLines [QUERY]    Lines in the current buffer
+" Tags [QUERY]      Tags in the project (ctags -R)
+" BTags [QUERY]     Tags in the current buffer
+" Marks	            Marks
+" Windows           Windows
+" Locate PATTERN    locate command output
+" History           v:oldfiles and open buffers
+" History:          Command history
+" History/          Search history
+" Snippets          Snippets (UltiSnips)
+" Commits           Git commits (requires fugitive.vim)
+" BCommits          Git commits for the current buffer
+" Commands          Commands
+" Maps              Normal mode mappings
+" Helptags          Help tags 1
+" Filetypes         File types
+nmap <Leader>fb :Buffers<cr>
+nmap <Leader>ft :Tags 
+nmap <Leader>ff :Files<cr> 
+nmap <Leader>fg :GFiles 
+
+
+
 
 
 "/
@@ -234,7 +260,7 @@ autocmd FileType php noremap <Leader>pc :call PhpExpandClass()<CR>
 "http://stackoverflow.com/questions/11531073/how-do-you-sort-a-range-of-lines-by-length
 vmap <Leader>su ! awk '{ print length(), $0 \| "sort -n \| cut -d\\  -f2-" }'<cr>
 "/ vim-php-cs-fixer.vim 
-nnoremap <silent><leader>pf :w \| call PhpCsFixerFixFile()<CR>
+nnoremap <silent><leader>F :w \| call PhpCsFixerFixFile()<CR>
 
 
 
@@ -280,16 +306,13 @@ nnoremap <leader>d :call pdv#DocumentWithSnip()<CR>
 "/
 autocmd FileType javascript nmap <Leader>jd :JsDoc<cr>
 
+autocmd Filetype json nmap <leader>F :%!python -m json.tool<cr>
+
 
 "-----------------------Plugins------------------------"
 "-----------------------Plugins------------------------"
 "-----------------------Plugins------------------------"
 
-
-"/
-"/ HARDTIME
-"/
-let g:hardtime_default_on = 1
 
 "/
 "/ SYNTASTIC
@@ -299,10 +322,10 @@ let g:hardtime_default_on = 1
 " set statusline+=%{SyntasticStatuslineFlag()}
 " set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 0
+let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
+let g:syntastic_check_on_wq = 1
 let g:syntastic_check_on_w = 1
 let g:syntastic_javascript_checkers = ["eslint", "jshint"]
 let g:syntastic_mode_map = {
@@ -391,7 +414,7 @@ let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 "/
 let g:vdebug_options = {
     \ 'break_on_open': 0,
-    \ 'path_maps': {'/var/www/html': '/Users/samuel.tissot/Sites/ocb'},
+    \ 'path_maps': {'/var/www/html': '/Users/samuel.tissot/hub/lightspeedretail/hq'},
     \ 'port': '9000',
     \ }
 
