@@ -4,13 +4,15 @@ call plug#begin('~/.vim/bundle')
 " vim hardtime
 " Plug 'takac/vim-hardtime'
 
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
 " Plug 'mhartington/oceanic-next'
-Plug 'ajmwagar/vim-deus'
-Plug 'dracula/vim', { 'as': 'dracula' }
+" Plug 'ajmwagar/vim-deus'
+Plug 'fenetikm/falcon'
+Plug 'itchyny/lightline.vim'
+" Plug 'dracula/vim', { 'as': 'dracula' }
 " Plug 'gilgigilgil/anderson.vim'
-Plug 'rakr/vim-two-firewatch'
+" Plug 'rakr/vim-two-firewatch'
 " Plug 'romainl/Apprentice'
 " Plug 'fatih/molokai'
 " Plug 'nightsense/simplifysimplify'

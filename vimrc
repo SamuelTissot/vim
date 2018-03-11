@@ -103,13 +103,19 @@ let g:terminal_color_15 = '#eeeeec'
 " let g:airline_theme='twofirewatch'
 
 " deus
-colorscheme deus 
-let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-let g:deus_termcolors=256
-" airline
-let g:airline_theme='deus'
+" colorscheme deus 
+" let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+" let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+" let g:deus_termcolors=256
+" " airline
+" let g:airline_theme='deus'
 
+"falcon theme
+colorscheme falcon
+let g:falcon_lightline = 1
+let g:lightline = {
+      \ 'colorscheme': 'falcon',
+      \ }
 
 "-----------------------Mappings------------------------"
 "-----------------------Mappings------------------------"
