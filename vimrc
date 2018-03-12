@@ -37,15 +37,10 @@ set wildignore+=*~,*.swp,*.tmp
 
 " Visuals
 set t_CO=256								"Use 256 colors. This is useful for Terminal Vim.
-set background=dark " Setting dark mode
-set guifont=Inconsalata\ for\ powerline:h14						"Set the default font family and size.
+set background=dark                                                     " Setting dark mode
 set guioptions-=e							"We don't want Gui tabs.
-set linespace=13   						        "Macvim-specific line-height.
 if (has("termguicolors"))
     set termguicolors
-endif
-if (has("macligatures"))
-    set macligatures							"We want pretty symbols, when available.
 endif
 
 set guioptions-=l                                                       "Disable Gui scrollbars.
@@ -73,22 +68,22 @@ setlocal spell spelllang=en_us
 "-----------------------term----------------------------"
 "-----------------------term----------------------------"
 "-----------------------term----------------------------"
-let g:terminal_color_0  = '#2e3436'
-let g:terminal_color_1  = '#cc0000'
-let g:terminal_color_2  = '#4e9a06'
-let g:terminal_color_3  = '#c4a000'
-let g:terminal_color_4  = '#3465a4'
-let g:terminal_color_5  = '#75507b'
-let g:terminal_color_6  = '#0b939b'
-let g:terminal_color_7  = '#d3d7cf'
-let g:terminal_color_8  = '#555753'
-let g:terminal_color_9  = '#ef2929'
-let g:terminal_color_10 = '#8ae234'
-let g:terminal_color_11 = '#fce94f'
-let g:terminal_color_12 = '#729fcf'
-let g:terminal_color_13 = '#ad7fa8'
-let g:terminal_color_14 = '#00f5e9'
-let g:terminal_color_15 = '#eeeeec'
+" let g:terminal_color_0  = '#2e3436'
+" let g:terminal_color_1  = '#cc0000'
+" let g:terminal_color_2  = '#4e9a06'
+" let g:terminal_color_3  = '#c4a000'
+" let g:terminal_color_4  = '#3465a4'
+" let g:terminal_color_5  = '#75507b'
+" let g:terminal_color_6  = '#0b939b'
+" let g:terminal_color_7  = '#d3d7cf'
+" let g:terminal_color_8  = '#555753'
+" let g:terminal_color_9  = '#ef2929'
+" let g:terminal_color_10 = '#8ae234'
+" let g:terminal_color_11 = '#fce94f'
+" let g:terminal_color_12 = '#729fcf'
+" let g:terminal_color_13 = '#ad7fa8'
+" let g:terminal_color_14 = '#00f5e9'
+" let g:terminal_color_15 = '#eeeeec'
 
 "-----------------------Theme---------------------------"
 "-----------------------Theme---------------------------"
@@ -233,9 +228,21 @@ nmap <Leader>tg :!ctags -R
 " Helptags          Help tags 1
 " Filetypes         File types
 nmap <Leader>fb :Buffers<cr>
-nmap <Leader>ft :Tags 
-nmap <Leader>ff :Files<cr> 
-nmap <Leader>fg :GFiles 
+nmap <Leader>fh :History<cr> 
+nmap <Leader>ff :GFiles<cr> 
+nmap <Leader>fF :Files<cr> 
+nmap <Leader>ft :BTags<cr>
+nmap <Leader>fT :Tags<cr> 
+nmap <Leader>fl :BLines<cr>
+nmap <Leader>fL :Lines<cr>
+nmap <Leader>f' :Marks<cr>
+nmap <Leader>fa :Ag<Space>
+nmap <Leader>hh :Helptags!<cr>
+nmap <Leader>fC :Commands<cr>
+nmap <Leader>f: :History:<CR>
+nmap <Leader>f/ :History/<CR>
+nmap <Leader>fM :Maps<CR>
+nmap <Leader>fs :Filetypes<CR>
 
 
 
@@ -321,6 +328,45 @@ autocmd Filetype json nmap <leader>F :%!python -m json.tool<cr>
 
 
 "/
+"/ LanguageClient-neovim
+"/
+
+" Automatically start language servers.
+let g:LanguageClient_autoStart = 1
+" Required for operations modifying multiple buffers like rename.
+set hidden
+
+" --- JavaScript
+" Minimal LSP configuration for JavaScript
+" let g:LanguageClient_serverCommands = {}
+" if executable('javascript-typescript-stdio')
+"   let g:LanguageClient_serverCommands.javascript = ['javascript-typescript-stdio']
+"   " Use LanguageServer for omnifunc completion
+"   autocmd FileType javascript setlocal omnifunc=LanguageClient#complete
+" else
+"   echo "javascript-typescript-stdio not installed!\n"
+"   :cq
+" endif
+" " <leader>ld to go to definition
+" autocmd FileType javascript <leader>ld :call LanguageClient_textDocument_definition()<cr>
+" " <leader>lh for type info under cursor
+" autocmd FileType javascript <leader>lh :call LanguageClient_textDocument_hover()<cr>
+" " <leader>lr to rename variable under cursor
+" autocmd FileType javascript <leader>lr :call LanguageClient_textDocument_rename()<cr>
+
+
+
+"/
+"/ LanguageServer-php-neovim
+"/
+ autocmd FileType php LanguageClientStart
+
+" nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+" nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+" nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+
+
+"/
 "/ SYNTASTIC
 "/
 
@@ -328,16 +374,16 @@ autocmd Filetype json nmap <leader>F :%!python -m json.tool<cr>
 " set statusline+=%{SyntasticStatuslineFlag()}
 " set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 1
-let g:syntastic_check_on_w = 1
-let g:syntastic_javascript_checkers = ["eslint", "jshint"]
-let g:syntastic_mode_map = {
-    \ "mode": "active",
-    \ "active_filetypes": [],
-    \ "passive_filetypes": ["go"] }
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 0
+" let g:syntastic_check_on_open = 0
+" let g:syntastic_check_on_wq = 1
+" let g:syntastic_check_on_w = 1
+" let g:syntastic_javascript_checkers = ["eslint", "jshint"]
+" let g:syntastic_mode_map = {
+"     \ "mode": "active",
+"     \ "active_filetypes": [],
+"     \ "passive_filetypes": ["go"] }
 
 "/
 "/ YAML
@@ -366,14 +412,14 @@ let g:go_highlight_methods = 1
 "/ CtrlP
 "/
 " igmore file in .gitignore
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.?(git|hg|svn|node_modules|vendor)$',
-  \ 'file': '\v\.(exe|so|dll)$',
-  \ 'link': 'some_bad_symbolic_links',
-  \ }
-let g:ctrlp_match_window = 'top,order:ttb,min:1,max:30,results:30'
-let g:ctrlp_working_path_mode = '0'
+" let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+" let g:ctrlp_custom_ignore = {
+"   \ 'dir':  '\v[\/]\.?(git|hg|svn|node_modules|vendor)$',
+"   \ 'file': '\v\.(exe|so|dll)$',
+"   \ 'link': 'some_bad_symbolic_links',
+"   \ }
+" let g:ctrlp_match_window = 'top,order:ttb,min:1,max:30,results:30'
+" let g:ctrlp_working_path_mode = '0'
 
 "/
 "/ Greplace.vim
@@ -387,19 +433,20 @@ let g:grep_cmd_opts = '--line-numbers --noheading'
 let g:php_cs_fixer_level = "psr2"  
 
 
+
 "/
 "/ phpcd
 "/
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#min_pattern_length = 3
-let g:deoplete#ignore_sources = get(g:, 'deoplete#ignore_sources', {})  " for deoplete
-let g:deoplete#ignore_sources.php = ['omni']                            " for deoplete
+" let g:deoplete#enable_at_startup = 1
+" let g:deoplete#min_pattern_length = 3
+" let g:deoplete#ignore_sources = get(g:, 'deoplete#ignore_sources', {})  " for deoplete
+" let g:deoplete#ignore_sources.php = ['omni']                            " for deoplete
 
 "/
 "/ deoplete
 "/
 "set runtimepath+=~/.vim/bundle/deoplete.nvim
-let g:deoplete#enable_at_startup = 1
+" let g:deoplete#enable_at_startup = 1
 
 "/
 "/ pdv

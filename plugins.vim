@@ -21,6 +21,9 @@ Plug 'VundleVim/Vundle.vim'
 " 
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
+" Plug 'Shougo/deoplete.nvim'
+Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
+Plug 'roxma/nvim-completion-manager'
 "
 "DB
 Plug 'tpope/vim-db'
@@ -39,12 +42,15 @@ Plug 'ervandew/supertab'
 Plug 'tobyS/vmustache'
 Plug 'SirVer/ultisnips'
 " PHP
+Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'}
+" Plug 'lvht/phpcd.vim', { 'for': 'php', 'do': 'composer install' }
+Plug 'phpactor/phpactor' ,  {'do': 'composer install'}
+Plug 'roxma/ncm-phpactor'
 Plug 'StanAngeloff/php.vim', { 'for': 'php' }
-Plug 'lvht/phpcd.vim', { 'for': 'php', 'do': 'composer install' }
 Plug 'stephpy/vim-php-cs-fixer', {'for': 'php'} 
 Plug 'arnaud-lb/vim-php-namespace', { 'for': 'php' }
 Plug 'joonty/vdebug', { 'for': 'php' }
-Plug 'tobyS/pdv', { 'for': 'php' }
+Plug 'tobyS/pdv', { 'for': 'php' }                                          " PHP comments
 " HTML, TWIG
 Plug 'evidens/vim-twig', {'for': ['html', 'twig']}
 " GO
@@ -53,11 +59,10 @@ Plug 'jodosha/vim-godebug', {'for': 'go'}
 " MARKDOWN
 Plug 'JamshedVesuna/vim-markdown-preview', { 'for': 'markdown' }
 " JAVASCRIPT
+Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}
 Plug 'heavenshell/vim-jsdoc', { 'for': 'javascript' }
 " Plugs below the line may really impact load time
-Plug 'Shougo/deoplete.nvim'
 Plug 'sheerun/vim-polyglot'
-Plug 'vim-syntastic/syntastic'
 
 " All of your Plugs must be added before the following line
 call plug#end()
