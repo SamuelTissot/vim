@@ -30,7 +30,7 @@ Plug 'SirVer/ultisnips'
 " PHP
 Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'}
 Plug 'phpactor/phpactor' ,  {'for': 'php', 'do': 'composer install'}
-" Plug 'StanAngeloff/php.vim', { 'for': 'php' }
+" Plug 'stanangeloff/php.vim', { 'for': 'php' }
 Plug 'stephpy/vim-php-cs-fixer', {'for': 'php'} 
 Plug 'arnaud-lb/vim-php-namespace', { 'for': 'php' }
 Plug 'joonty/vdebug', { 'for': 'php' }

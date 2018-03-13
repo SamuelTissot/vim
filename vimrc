@@ -227,27 +227,27 @@ nmap <Leader>fs :Filetypes<CR>
 "/
 " run code
 autocmd FileType php map <Leader>r :!php -f %<cr>
+
 " php lint
 nmap <Leader>pl :w<cr>:!php -l %<cr>
 
-" function! IPhpInsertUse()
-"     call PhpInsertUse()
-"     call feedkeys('a',  'n')
-" endfunction
-" autocmd FileType php inoremap <Leader>pu <Esc>:call IPhpInsertUse()<CR>
-" autocmd FileType php noremap <Leader>pu :call PhpInsertUse()<CR>
+ function! IPhpInsertUse()
+     call PhpInsertUse()
+     call feedkeys('a',  'n')
+ endfunction
+ autocmd FileType php noremap <Leader>pu :call PhpInsertUse()<CR>
 
-" function! IPhpExpandClass()
-"     call PhpExpandClass()
-"     call feedkeys('a', 'n')
-" endfunction
-" autocmd FileType php inoremap <Leader>pc <Esc>:call IPhpExpandClass()<CR>
-" autocmd FileType php noremap <Leader>pc :call PhpExpandClass()<CR>
-"Sort PHP use statements
-"http://stackoverflow.com/questions/11531073/how-do-you-sort-a-range-of-lines-by-length
-" vmap <Leader>su ! awk '{ print length(), $0 \| "sort -n \| cut -d\\  -f2-" }'<cr>
-"/ vim-php-cs-fixer.vim 
-" nnoremap <silent><leader>F :w \| call PhpCsFixerFixFile()<CR>
+ function! IPhpExpandClass()
+     call PhpExpandClass()
+     call feedkeys('a', 'n')
+ endfunction
+ autocmd FileType php noremap <Leader>pc :call PhpExpandClass()<CR>
+
+" Sort PHP use statements http://stackoverflow.com/questions/11531073/how-do-you-sort-a-range-of-lines-by-length
+vmap <Leader>su ! awk '{ print length(), $0 \| "sort -n \| cut -d\\  -f2-" }'<cr>
+
+" vim-php-cs-fixer.vim 
+ nnoremap <silent><leader>F :w \| call PhpCsFixerFixFile()<CR>
 
 
 
