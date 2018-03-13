@@ -3,8 +3,7 @@ set nocompatible              						"pWe want the latest Vim settings/options.
 " Splasm screen
 so ~/.vim/splash.vim
 
-" Vundle
-" install by: git clone https://github.com/VundleVim/Vundle.vim.git " ~/.vim/bundle/Vundle.vim
+" Plug
 so ~/.vim/plugins.vim
 
 if empty(glob('~/.vim/autoload/plug.vim'))
@@ -34,6 +33,8 @@ set wildignore+=*.a,*.o
 set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
 set wildignore+=.DS_Store,.git,.hg,.svn
 set wildignore+=*~,*.swp,*.tmp
+
+set listchars=eol:$,tab:>·,trail:~,extends:>,precedes:<,space:␣
 
 " Visuals
 set t_CO=256								"Use 256 colors. This is useful for Terminal Vim.
@@ -68,44 +69,27 @@ setlocal spell spelllang=en_us
 "-----------------------term----------------------------"
 "-----------------------term----------------------------"
 "-----------------------term----------------------------"
-" let g:terminal_color_0  = '#2e3436'
-" let g:terminal_color_1  = '#cc0000'
-" let g:terminal_color_2  = '#4e9a06'
-" let g:terminal_color_3  = '#c4a000'
-" let g:terminal_color_4  = '#3465a4'
-" let g:terminal_color_5  = '#75507b'
-" let g:terminal_color_6  = '#0b939b'
-" let g:terminal_color_7  = '#d3d7cf'
-" let g:terminal_color_8  = '#555753'
-" let g:terminal_color_9  = '#ef2929'
-" let g:terminal_color_10 = '#8ae234'
-" let g:terminal_color_11 = '#fce94f'
-" let g:terminal_color_12 = '#729fcf'
-" let g:terminal_color_13 = '#ad7fa8'
-" let g:terminal_color_14 = '#00f5e9'
-" let g:terminal_color_15 = '#eeeeec'
+let g:terminal_color_0  = '#2e3436'
+let g:terminal_color_1  = '#cc0000'
+let g:terminal_color_2  = '#4e9a06'
+let g:terminal_color_3  = '#c4a000'
+let g:terminal_color_4  = '#3465a4'
+let g:terminal_color_5  = '#75507b'
+let g:terminal_color_6  = '#0b939b'
+let g:terminal_color_7  = '#d3d7cf'
+let g:terminal_color_8  = '#555753'
+let g:terminal_color_9  = '#ef2929'
+let g:terminal_color_10 = '#8ae234'
+let g:terminal_color_11 = '#fce94f'
+let g:terminal_color_12 = '#729fcf'
+let g:terminal_color_13 = '#ad7fa8'
+let g:terminal_color_14 = '#00f5e9'
+let g:terminal_color_15 = '#eeeeec'
 
 "-----------------------Theme---------------------------"
 "-----------------------Theme---------------------------"
 "-----------------------Theme---------------------------"
 
-" apprentice
-" colorscheme apprentice 
-
-" two_firewatch
-" let g:two_firewatch_italics=1
-" colo two-firewatch
-" let g:airline_theme='twofirewatch'
-
-" deus
-" colorscheme deus 
-" let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-" let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-" let g:deus_termcolors=256
-" " airline
-" let g:airline_theme='deus'
-
-"falcon theme
 colorscheme falcon
 let g:falcon_lightline = 1
 let g:lightline = {
@@ -135,10 +119,13 @@ nmap <leader>ep :tabedit ~/.vim/plugins.vim<cr>
 tnoremap <Esc> <C-\><C-n>
 
 "To use `ALT+{h,j,k,l}` to navigate windows from any mode: >
-tnoremap <C-h> <C-\><C-N><C-w>h
-tnoremap <C-j> <C-\><C-N><C-w>j
-tnoremap <C-k> <C-\><C-N><C-w>k
-tnoremap <C-l> <C-\><C-N><C-w>l
+if has('nvim')
+    tnoremap <C-h> <C-\><C-N><C-w>h
+    tnoremap <C-j> <C-\><C-N><C-w>j
+    tnoremap <C-k> <C-\><C-N><C-w>k
+    tnoremap <C-l> <C-\><C-N><C-w>l
+endif
+
 inoremap <C-h> <C-\><C-N><C-w>h
 inoremap <C-j> <C-\><C-N><C-w>j
 inoremap <C-k> <C-\><C-N><C-w>k
@@ -147,17 +134,7 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
-"nmap <C-J> <C-W><C-J>
-"nmap <C-K> <C-W><C-K>
-"nmap <C-H> <C-W><C-H>
-"nmap <C-L> <C-W><C-L>
-function! FocusCurrentBuffer()
-  :w
-  :%bd!
-  :e#
-endfunction
  
-nmap <Leader>bf :call FocusCurrentBuffer()<CR>
 
 "/
 "/ NOTES 
@@ -245,9 +222,6 @@ nmap <Leader>fM :Maps<CR>
 nmap <Leader>fs :Filetypes<CR>
 
 
-
-
-
 "/
 "/ PHP mappings
 "/
@@ -256,24 +230,24 @@ autocmd FileType php map <Leader>r :!php -f %<cr>
 " php lint
 nmap <Leader>pl :w<cr>:!php -l %<cr>
 
-function! IPhpInsertUse()
-    call PhpInsertUse()
-    call feedkeys('a',  'n')
-endfunction
-autocmd FileType php inoremap <Leader>pu <Esc>:call IPhpInsertUse()<CR>
-autocmd FileType php noremap <Leader>pu :call PhpInsertUse()<CR>
+" function! IPhpInsertUse()
+"     call PhpInsertUse()
+"     call feedkeys('a',  'n')
+" endfunction
+" autocmd FileType php inoremap <Leader>pu <Esc>:call IPhpInsertUse()<CR>
+" autocmd FileType php noremap <Leader>pu :call PhpInsertUse()<CR>
 
-function! IPhpExpandClass()
-    call PhpExpandClass()
-    call feedkeys('a', 'n')
-endfunction
-autocmd FileType php inoremap <Leader>pc <Esc>:call IPhpExpandClass()<CR>
-autocmd FileType php noremap <Leader>pc :call PhpExpandClass()<CR>
+" function! IPhpExpandClass()
+"     call PhpExpandClass()
+"     call feedkeys('a', 'n')
+" endfunction
+" autocmd FileType php inoremap <Leader>pc <Esc>:call IPhpExpandClass()<CR>
+" autocmd FileType php noremap <Leader>pc :call PhpExpandClass()<CR>
 "Sort PHP use statements
 "http://stackoverflow.com/questions/11531073/how-do-you-sort-a-range-of-lines-by-length
-vmap <Leader>su ! awk '{ print length(), $0 \| "sort -n \| cut -d\\  -f2-" }'<cr>
+" vmap <Leader>su ! awk '{ print length(), $0 \| "sort -n \| cut -d\\  -f2-" }'<cr>
 "/ vim-php-cs-fixer.vim 
-nnoremap <silent><leader>F :w \| call PhpCsFixerFixFile()<CR>
+" nnoremap <silent><leader>F :w \| call PhpCsFixerFixFile()<CR>
 
 
 
@@ -331,10 +305,18 @@ autocmd Filetype json nmap <leader>F :%!python -m json.tool<cr>
 "/ LanguageClient-neovim
 "/
 
-" Automatically start language servers.
-let g:LanguageClient_autoStart = 1
 " Required for operations modifying multiple buffers like rename.
 set hidden
+
+let g:LanguageClient_serverCommands = {
+    \ 'javascript': ['javascript-typescript-stdio'],
+    \ 'javascript.jsx': ['javascript-typescript-stdio'],
+    \ 'php': ['php', '$MYVIMRC/bundle/LanguageServer-php-neovim/vendor/felixfbecker/language-server/bin/php-language-server.php'],
+    \ }
+
+nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 
 " --- JavaScript
 " Minimal LSP configuration for JavaScript
@@ -356,34 +338,18 @@ set hidden
 
 
 
-"/
-"/ LanguageServer-php-neovim
-"/
- autocmd FileType php LanguageClientStart
-
-" nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-" nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-" nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
-
 
 "/
-"/ SYNTASTIC
+"/ vim-test
 "/
+nmap <Leader>tm :TestNearest<CR>
+nmap <Leader>tf :TestFile<CR>
+nmap <Leader>ts :TestSuite<CR>
+nmap <Leader>tl :TestLast<CR>
+nmap <Leader>tv :TestVisit<CR>
+" make test commands execute using dispatch.vim
+let test#strategy = "neovim"
 
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 0
-" let g:syntastic_check_on_open = 0
-" let g:syntastic_check_on_wq = 1
-" let g:syntastic_check_on_w = 1
-" let g:syntastic_javascript_checkers = ["eslint", "jshint"]
-" let g:syntastic_mode_map = {
-"     \ "mode": "active",
-"     \ "active_filetypes": [],
-"     \ "passive_filetypes": ["go"] }
 
 "/
 "/ YAML
