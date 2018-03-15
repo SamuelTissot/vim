@@ -1,6 +1,5 @@
 set nocompatible              						"pWe want the latest Vim settings/options.
-"
-" Splasm screen
+
 so ~/.vim/splash.vim
 
 " Plug
@@ -383,7 +382,6 @@ let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 
-
 "/
 "/ VDEBUG
 "/
@@ -411,7 +409,7 @@ let g:jsdoc_enable_es6=1
 "-------------Auto-Commands--------------"
 "Automatically source the Vimrc file on save.
 if has("autocmd")
-  autocmd bufwritepost .vimrc source $MYVIMRC
+  autocmd bufwritepost vimrc source $MYVIMRC
 endif
 
 
@@ -430,7 +428,6 @@ endfor
 autocmd InsertLeave * set iminsert=0
 
 
-
 "/
 "/ Antidote
 "/
@@ -440,62 +437,3 @@ function! CallAntidoteSpellCheck()
 endfunction
  
 nmap <Leader>sc :call CallAntidoteSpellCheck()<CR>
-
-
-
-
-
-
-
-
-
-
-
-"-------------Tips and Reminders--------------"
-" - Press 'zz' to instantly center the line where the cursor is located.
-" 
-"
-"   VIM-FUGITIVE
-"   -------
-"   http://vimcasts.org/episodes/fugitive-vim-resolving-merge-conflicts-with-vimdiff/
-"   
-"   Gwrite adds the current file to the index, and if in a conflic merge will
-"   do a :only command
-"
-"   Gdiff | 3 way merge
-"   - dp : use 'dp' in either the target(left window) or Merge(right window) to use
-"   that version of the code.
-"   - diffput and diffget can also be used but needs an argument:
-"           //2 | filename | //3
-"   - diffup or diffupdate to refresh the difference hightligh
-"   - Gwrite : use the current buffer to override the working copy.
-"
-"
-"   DELETE ALL BUFFER EXEPT CURRENT
-"   :w | %db | e#
-"   - w write file
-"   - %bd close all buffer
-"   - edit current last buffer
-"
-"   SEARCH 
-"   -----
-"   Option:1 - search
-"   :grep -R "what_to_search_for"
-"   :copen
-"
-"   Option:2 - search fastest
-"   :Ack "What_to_search_for"
-"
-"   SEARCH & REPLACE
-"   ----
-"   :Gsearch ...
-"   replace instance in buffer ( :%s/ORIGINAL/REPLACEMENT/options )
-"   :Greplace
-"
-"  NEWTRW
-" :e.	:edit .	at current working directory
-" :sp.	:split .	in split at current working directory
-" :vsplit .	in vertical split at current working directory
-" :Explore	at directory of current file
-" :Sexplore	in split at directory of current file
-" :Vexplore	in vertical split at directory of current file

@@ -1,60 +1,38 @@
 fun! Start()
+    " Don't run if: we have commandline arguments, we don't have an empty
+    " buffer, if we've not invoked as vim or gvim, or if we'e start in insert mode
+    if argc() || line2byte('$') != -1 || v:progname !~? '^[-gmnq]\=vim\=x\=\%[\.exe]$' || &insertmode
+        return
+    endif
 
-  "Create a new unnamed buffer to display our splash screen inside of.
-  enew
+    " Start a new buffer ...
+    enew
 
-  " Set some options for this buffer to make sure that does not act like a
-  " normal winodw.
-  setlocal
-    \ bufhidden=wipe
-    \ buftype=nofile
-    \ nobuflisted
-    \ nocursorcolumn
-    \ nocursorline
-    \ nolist
-    \ nonumber
-    \ noswapfile
-    \ norelativenumber
+    " ... and set some options for it
+    setlocal
+        \ bufhidden=wipe
+        \ buftype=nofile
+        \ nobuflisted
+        \ nocursorcolumn
+        \ nocursorline
+        \ nolist
+        \ nonumber
+        \ noswapfile
+        \ norelativenumber
 
-  let message = '
-              \ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-              \ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-              \             HELLO SAMUEL ! EXPLORE, ALWAYS
-              \ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-              \ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-              \
-              \
-              \
-              \ MY CUSTOM MAPPINGS
-              \ -------------------------------------------------------------------------------------------------------------------------------
-              \'
+    let s:lines = readfile("/Users/samuel.tissot/.vim/tips_tricks.txt")
+    for s:line in s:lines
+        call append('$', s:line)
+    endfor
 
-  " Our message goes here. Mine is simple.
-  call append('$', message)
+    " No modifications to this buffer
+    setlocal nomodifiable nomodified
 
-  " When we are done writing out message set the buffer to readonly.
-  setlocal
-    \ nomodifiable
-    \ nomodified
-
-  " Just like with the default start page, when we switch to insert mode
-  " a new buffer should be opened which we can then later save.
-  nnoremap <buffer><silent> e :enew<CR>
-  nnoremap <buffer><silent> i :enew <bar> startinsert<CR>
-  nnoremap <buffer><silent> o :enew <bar> startinsert<CR>
-
+    " When we go to insert mode start a new buffer, and start insert
+    nnoremap <buffer><silent> e :enew<CR>
+    nnoremap <buffer><silent> i :enew <bar> startinsert<CR>
+    nnoremap <buffer><silent> o :enew <bar> startinsert<CR>
 endfun
 
-" http://learnvimscriptthehardway.stevelosh.com/chapters/12.html
-" Autocommands are a way of setting handlers for certain events.
-" `VimEnter` is the event we want to handle. http://vimdoc.sourceforge.net/htmldoc/autocmd.html#VimEnter
-" The cleene star (`*`) is a pattern to indicate which filenames this Autocommand will apply too. In this case, star means all files.
-" We will call the `Start` function to handle this event.
-
-" http://vimdoc.sourceforge.net/htmldoc/eval.html#argc%28%29
-" The number of files in the argument list of the current window.
-" If there are 0 then that means this is a new session and we want to display
-" our custom splash screen.
-if argc() == 0
-  autocmd VimEnter * call Start()
-endif
+" Run after "doing all the startup stuff"
+autocmd VimEnter * call Start()

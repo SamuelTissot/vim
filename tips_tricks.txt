@@ -1,0 +1,47 @@
+= = = = = = = = = = = = = = = = = = = == = = = = = = = = = = = = = = = = = = =  
+       _             _   _              ___     _        _      _        
+__   _(_)_ __ ___   | |_(_)_ __  ___   ( _ )   | |_ _ __(_) ___| | _____ 
+\ \ / / | '_ ` _ \  | __| | '_ \/ __|  / _ \/\ | __| '__| |/ __| |/ / __|
+ \ V /| | | | | | | | |_| | |_) \__ \ | (_>  < | |_| |  | | (__|   <\__ \
+  \_/ |_|_| |_| |_|  \__|_| .__/|___/  \___/\/  \__|_|  |_|\___|_|\_\___/
+                          |_|                                            
+= = = = = = = = = = = = = = = = = = = == = = = = = = = = = = = = = = = = = = =  
+    		by Samuel Tissot | March 2018
+
+MOVEMENT
+--------
+- Press 'zz' to instantly center the line where the cursor is located.
+
+FOCUS
+--------
+	:only				-- closes all split except active one
+
+VIM-FUGITIVE
+-------
+	:Gwrite 			-- adds the current file to the index, and if in a conflic merge will
+  	:Gdiff				-- 3 way merge
+  					-- dp : use 'dp' in either the target(left window) or Merge(right window) to use that version.
+  	:diffput OR :diffget 		-- can also be used but needs an argument: "//2 | filename | //3"
+	:diffup				-- refresh the difference hightligh
+	:Gwrite				-- use the current buffer to override the working copy.
+
+SEARCH 
+-------
+  	:grep -R "what_to_search_for"
+  	:Ack "What_to_search_for"	-- search fastest
+  	:copen 				-- open search results
+
+SEARCH & REPLACE
+-------
+  	:Gsearch ... 			-- replace instance in buffer ( :%s/ORIGINAL/REPLACEMENT/options )
+  	:Greplace
+
+NEWTRW
+-------
+	:e.:edit 			-- at current working directory
+	:sp.:split 			-- open in split at current working directory
+	:vsplit 			-- in vertical split at current working directory
+	:Explore			-- at directory of current file
+	:Sexplore			-- in split at directory of current file
+	:Vexplorein 			-- vertical split at directory of current file
+
