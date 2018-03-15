@@ -4,18 +4,17 @@ set nocompatible              						"pWe want the latest Vim settings/options.
 so ~/.vim/splash.vim
 
 " Plug
-so ~/.vim/plugins.vim
-
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
+so ~/.vim/plugins.vim
 
 syntax enable
 set backspace=indent,eol,start                                          "Make backspace behave like every other editor.
 set number								"Let's activate line numbers.
-set relativenumber
+set relativenumber 
 set noerrorbells visualbell t_vb=               			"No damn bells!
 set autowriteall                                                        "Automatically write the file when switching buffers.
 set complete=.,w,b,u 							"Set our desired autocompletion matching.
@@ -24,9 +23,10 @@ set expandtab
 set softtabstop=4
 set shiftwidth=4
 set ignorecase                                                        " ignre case in search
-"set tags=tags;                                                        " for ctags
+set tags=tags;                                                        " for ctags
 set updatetime=100                                                    " update time for that status line
 set mouse=a
+set hidden                                                              " Required for operations modifying multiple buffers like rename.
 " vim ignore
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip                              " MacOSX/Linux
 set wildignore+=*.a,*.o
@@ -34,7 +34,7 @@ set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
 set wildignore+=.DS_Store,.git,.hg,.svn
 set wildignore+=*~,*.swp,*.tmp
 
-set listchars=eol:$,tab:>·,trail:~,extends:>,precedes:<,space:␣
+set listchars=eol:$,tab:>·,trail:~,extends:>,precedes:<,space:␣         " show hidden char 
 
 " Visuals
 set t_CO=256								"Use 256 colors. This is useful for Terminal Vim.
@@ -62,8 +62,6 @@ set splitright								"And to the right. This feels more natural.
 
 " spelling
 setlocal spell spelllang=en_us
-
-
 
 
 "-----------------------term----------------------------"
@@ -305,8 +303,6 @@ autocmd Filetype json nmap <leader>F :%!python -m json.tool<cr>
 "/ LanguageClient-neovim
 "/
 
-" Required for operations modifying multiple buffers like rename.
-set hidden
 
 let g:LanguageClient_serverCommands = {
     \ 'javascript': ['javascript-typescript-stdio'],
@@ -317,27 +313,6 @@ let g:LanguageClient_serverCommands = {
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
-
-" --- JavaScript
-" Minimal LSP configuration for JavaScript
-" let g:LanguageClient_serverCommands = {}
-" if executable('javascript-typescript-stdio')
-"   let g:LanguageClient_serverCommands.javascript = ['javascript-typescript-stdio']
-"   " Use LanguageServer for omnifunc completion
-"   autocmd FileType javascript setlocal omnifunc=LanguageClient#complete
-" else
-"   echo "javascript-typescript-stdio not installed!\n"
-"   :cq
-" endif
-" " <leader>ld to go to definition
-" autocmd FileType javascript <leader>ld :call LanguageClient_textDocument_definition()<cr>
-" " <leader>lh for type info under cursor
-" autocmd FileType javascript <leader>lh :call LanguageClient_textDocument_hover()<cr>
-" " <leader>lr to rename variable under cursor
-" autocmd FileType javascript <leader>lr :call LanguageClient_textDocument_rename()<cr>
-
-
-
 
 "/
 "/ vim-test
@@ -374,18 +349,6 @@ let g:go_highlight_types = 1
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 
-"/
-"/ CtrlP
-"/
-" igmore file in .gitignore
-" let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
-" let g:ctrlp_custom_ignore = {
-"   \ 'dir':  '\v[\/]\.?(git|hg|svn|node_modules|vendor)$',
-"   \ 'file': '\v\.(exe|so|dll)$',
-"   \ 'link': 'some_bad_symbolic_links',
-"   \ }
-" let g:ctrlp_match_window = 'top,order:ttb,min:1,max:30,results:30'
-" let g:ctrlp_working_path_mode = '0'
 
 "/
 "/ Greplace.vim
@@ -393,26 +356,19 @@ let g:go_highlight_methods = 1
 set grepprg=ag								"We want to use Ag for the search.
 let g:grep_cmd_opts = '--line-numbers --noheading'
 
+
+"/
+"/ Ack.vim
+"/
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
+
 "/
 "/ vim-php-cs-fixer.vim
 "/
 let g:php_cs_fixer_level = "psr2"  
 
-
-
-"/
-"/ phpcd
-"/
-" let g:deoplete#enable_at_startup = 1
-" let g:deoplete#min_pattern_length = 3
-" let g:deoplete#ignore_sources = get(g:, 'deoplete#ignore_sources', {})  " for deoplete
-" let g:deoplete#ignore_sources.php = ['omni']                            " for deoplete
-
-"/
-"/ deoplete
-"/
-"set runtimepath+=~/.vim/bundle/deoplete.nvim
-" let g:deoplete#enable_at_startup = 1
 
 "/
 "/ pdv
@@ -439,12 +395,9 @@ let g:vdebug_options = {
 
 
 "/
-"/ Markdown preview
-"/ ctl+p  " when in a markdown file 
+"/ octodown (markdown)
 "/
-let vim_markdown_preview_github=1
-
-
+autocmd FileType markdown let b:dispatch = 'octodown --live-reload %'
 
 "/
 "/ JSDOC
@@ -518,8 +471,6 @@ nmap <Leader>sc :call CallAntidoteSpellCheck()<CR>
 "   - Gwrite : use the current buffer to override the working copy.
 "
 "
-"
-"
 "   DELETE ALL BUFFER EXEPT CURRENT
 "   :w | %db | e#
 "   - w write file
@@ -533,7 +484,7 @@ nmap <Leader>sc :call CallAntidoteSpellCheck()<CR>
 "   :copen
 "
 "   Option:2 - search fastest
-"   :Ag "What_to_search_for"
+"   :Ack "What_to_search_for"
 "
 "   SEARCH & REPLACE
 "   ----
