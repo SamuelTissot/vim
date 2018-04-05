@@ -62,6 +62,8 @@ set splitright								"And to the right. This feels more natural.
 " spelling
 setlocal spell spelllang=en_us
 
+autocmd BufNewFile,BufRead *.zsh setlocal filetype=zsh
+
 
 "-----------------------term----------------------------"
 "-----------------------term----------------------------"
@@ -299,19 +301,14 @@ autocmd Filetype json nmap <leader>F :%!python -m json.tool<cr>
 
 
 "/
-"/ LanguageClient-neovim
+"/ nvim-completion-manager
 "/
-
-
-let g:LanguageClient_serverCommands = {
-    \ 'javascript': ['javascript-typescript-stdio'],
-    \ 'javascript.jsx': ['javascript-typescript-stdio'],
-    \ 'php': ['php', '$MYVIMRC/bundle/LanguageServer-php-neovim/vendor/felixfbecker/language-server/bin/php-language-server.php'],
-    \ }
-
-nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
+let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
+let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
+let g:UltiSnipsRemoveSelectModeMappings = 0
+" optional
+inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ultisnips_expand)")<cr>
 
 "/
 "/ vim-test
@@ -334,7 +331,7 @@ autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 "/ 
 "/ NERTW
 "/t 
-"let g:netrw_banner = 0
+let g:netrw_banner = 1
 "let g:netrw_browse_split = 4
 let g:netrw_winsize = 25
 
@@ -368,15 +365,14 @@ endif
 "/
 let g:php_cs_fixer_level = "psr2"  
 
-
 "/
 "/ pdv
 "/
 let g:pdv_template_dir = $HOME ."/.vim/bundle/pdv/templates_snip"
 
 "/
-"/ Ultisnips
-"/
+""/ Ultisnips
+""/
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
@@ -387,7 +383,7 @@ let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 "/
 let g:vdebug_options = {
     \ 'break_on_open': 0,
-    \ 'path_maps': {'/var/www/html': '/Users/samuel.tissot/hub/lightspeedretail/hq'},
+    \ 'path_maps': {'/var/www/html': '/Users/samuel.tissot/hub/src/github.com/lightspeedretail/hq'},
     \ 'port': '9000',
     \ }
 
@@ -406,11 +402,17 @@ let g:jsdoc_input_description=1
 let g:jsdoc_enable_es6=1
 
 
+"/
+"/ vim-helm
+"/
+autocmd BufNewFile,BufRead *.tpl   set filetype=yaml
+autocmd BufRead,BufNewFile */templates/*.yaml,*/templates/*.tpl set filetype=helm
+
 "-------------Auto-Commands--------------"
 "Automatically source the Vimrc file on save.
-if has("autocmd")
-  autocmd bufwritepost vimrc source $MYVIMRC
-endif
+" if has("autocmd")
+"   autocmd bufwritepost vimrc source $MYVIMRC
+" endif
 
 
  
