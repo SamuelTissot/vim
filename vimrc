@@ -16,7 +16,6 @@ set number								"Let's activate line numbers.
 set relativenumber 
 set noerrorbells visualbell t_vb=               			"No damn bells!
 set autowriteall                                                        "Automatically write the file when switching buffers.
-set complete=.,w,b,u 							"Set our desired autocompletion matching.
 set tabstop=8
 set expandtab
 set softtabstop=4
@@ -33,12 +32,10 @@ set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
 set wildignore+=.DS_Store,.git,.hg,.svn
 set wildignore+=*~,*.swp,*.tmp
 
-set listchars=eol:$,tab:>·,trail:~,extends:>,precedes:<,space:␣         " show hidden char 
+set undofile                                                          " maintain undo history between session 
+set undodir=~/.vim/undodir
 
-" Visuals
-set t_CO=256								"Use 256 colors. This is useful for Terminal Vim.
-set background=dark                                                     " Setting dark mode
-set guioptions-=e							"We don't want Gui tabs.
+
 if (has("termguicolors"))
     set termguicolors
 endif
@@ -61,9 +58,13 @@ set splitright								"And to the right. This feels more natural.
 
 " spelling
 setlocal spell spelllang=en_us
+set dictionary+=/usr/share/dict/words
 
 autocmd BufNewFile,BufRead *.zsh setlocal filetype=zsh
 
+" completion
+" set completeopt=longest,menuone
+set complete=.,w,b,u 							"Set our desired autocompletion matching.
 
 "-----------------------term----------------------------"
 "-----------------------term----------------------------"
@@ -303,12 +304,13 @@ autocmd Filetype json nmap <leader>F :%!python -m json.tool<cr>
 "/
 "/ nvim-completion-manager
 "/
-let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
-let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
-let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
-let g:UltiSnipsRemoveSelectModeMappings = 0
-" optional
-inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ultisnips_expand)")<cr>
+ " let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
+" let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
+" let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
+" let g:UltiSnipsRemoveSelectModeMappings = 0
+" " optional
+" inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ultisnips_expand)")<cr>
+" let g:cm_completekeys = "\<Plug>(cm_omnifunc)"
 
 "/
 "/ vim-test
@@ -382,7 +384,7 @@ let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 "/ VDEBUG
 "/
 let g:vdebug_options = {
-    \ 'break_on_open': 0,
+    \ 'break_on_open': 1,
     \ 'path_maps': {'/var/www/html': '/Users/samuel.tissot/hub/src/github.com/lightspeedretail/hq'},
     \ 'port': '9000',
     \ }

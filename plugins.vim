@@ -5,7 +5,7 @@ Plug 'fenetikm/falcon'                                              " Theme
 Plug 'itchyny/lightline.vim'                                        " status line
 Plug 'w0rp/ale'                                                     " Ale linting
 Plug 'sheerun/vim-polyglot'                                         " language pack
-Plug 'roxma/nvim-completion-manager'                                " completion
+" Plug 'roxma/nvim-completion-manager'                                " completion
 Plug '/usr/local/opt/fzf'                                           " serach everything
 Plug 'junegunn/fzf.vim'                                             " search everything
 Plug 'janko-m/vim-test'                                             " run tests
@@ -16,6 +16,7 @@ Plug 'mileszs/ack.vim'                                              " search too
 Plug 'skwp/greplace.vim'                                            " search and replace across many files
 Plug 'tpope/vim-surround'                                           " surround everything
 Plug 'tpope/vim-fugitive'                                           " Git awesomness
+Plug 'tpope/vim-rhubarb'                                            " extension for vim awesoness
 Plug 'tpope/vim-vinegar'                                            " enhances netrw
 Plug 'tpope/vim-commentary'                                         " Comment stuff out. <gcc>
 " Plug 'ervandew/supertab'                                            "  allows you to use <Tab> for all your insert completion
@@ -31,8 +32,8 @@ Plug 'phpactor/phpactor' ,  {
 Plug 'roxma/ncm-phpactor', { 'for': 'php' }                         " PHP phpactor integration for nvim-completion-manager
 Plug 'stanangeloff/php.vim', { 'for': 'php' }                       " PHP An up-to-date Vim syntax for PHP
 Plug 'shawncplus/phpcomplete.vim', { 'for': 'php' }
-" Plug 'stephpy/vim-php-cs-fixer', {'for': 'php'} 
-" Plug 'arnaud-lb/vim-php-namespace', { 'for': 'php' }                " PHP inserting use statements
+Plug 'stephpy/vim-php-cs-fixer', {'for': 'php'} 
+Plug 'arnaud-lb/vim-php-namespace', { 'for': 'php' }                " PHP inserting use statements
 " Plug 'tobyS/pdv', { 'for': 'php' }                                  " PHP Documentor for VIM
 Plug 'joonty/vdebug', { 'for': 'php' }                              " Xdebug
 Plug 'evidens/vim-twig', {'for': ['html', 'twig']}                  " Twig HTML
