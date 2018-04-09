@@ -233,23 +233,35 @@ autocmd FileType php map <Leader>r :!php -f %<cr>
 " php lint
 nmap <Leader>pl :w<cr>:!php -l %<cr>
 
- function! IPhpInsertUse()
-     call PhpInsertUse()
-     call feedkeys('a',  'n')
- endfunction
- autocmd FileType php noremap <Leader>pu :call PhpInsertUse()<CR>
+ " function! IPhpInsertUse()
+ "     call PhpInsertUse()
+ "     call feedkeys('a',  'n')
+ " endfunction
+ " autocmd FileType php noremap <Leader>pu :call PhpInsertUse()<CR>
 
- function! IPhpExpandClass()
-     call PhpExpandClass()
-     call feedkeys('a', 'n')
- endfunction
- autocmd FileType php noremap <Leader>pc :call PhpExpandClass()<CR>
+ " function! IPhpExpandClass()
+ "     call PhpExpandClass()
+ "     call feedkeys('a', 'n')
+ " endfunction
+ " autocmd FileType php noremap <Leader>pc :call PhpExpandClass()<CR>
 
 " Sort PHP use statements http://stackoverflow.com/questions/11531073/how-do-you-sort-a-range-of-lines-by-length
 vmap <Leader>su ! awk '{ print length(), $0 \| "sort -n \| cut -d\\  -f2-" }'<cr>
 
 " vim-php-cs-fixer.vim 
  nnoremap <silent><leader>F :w \| call PhpCsFixerFixFile()<CR>
+ 
+"/
+"/ PHPactor
+"/
+autocmd FileType php setlocal omnifunc=phpactor#Complete
+nmap <Leader>pu :call phpactor#UseAdd()<CR>                       " Include use statement
+nmap <Leader>pm :call phpactor#ContextMenu()<CR>                 " Invoke the context menu
+nmap <Leader>po :call phpactor#GotoDefinition()<CR>               " Goto definition of class or class member under the cursor
+nmap <Leader>pt :call phpactor#Transform()<CR>                   " Transform the classes in the current file
+nmap <Leader>pc :call phpactor#ClassNew()<CR>                    " Generate a new class (replacing the current file)
+vmap <silent><Leader>pe :<C-U>call phpactor#ExtractMethod()<CR>  " Extract method from selection
+
 
 
 

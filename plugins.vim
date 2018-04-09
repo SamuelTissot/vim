@@ -5,10 +5,9 @@ Plug 'fenetikm/falcon'                                              " Theme
 Plug 'itchyny/lightline.vim'                                        " status line
 Plug 'w0rp/ale'                                                     " Ale linting
 Plug 'sheerun/vim-polyglot'                                         " language pack
-" Plug 'roxma/nvim-completion-manager'                                " completion
+Plug 'Yggdroot/indentLine'                                          " indentation markers
 Plug '/usr/local/opt/fzf'                                           " serach everything
 Plug 'junegunn/fzf.vim'                                             " search everything
-Plug 'janko-m/vim-test'                                             " run tests
 Plug 'tpope/vim-dadbod'                                             " DB interaction
 Plug 'tpope/vim-dispatch'                                           " Kick off builds and test suites using one of several asynchronous adapters
 Plug 'radenling/vim-dispatch-neovim'                                " for dispatch and Neovim
@@ -21,27 +20,15 @@ Plug 'tpope/vim-vinegar'                                            " enhances n
 Plug 'tpope/vim-commentary'                                         " Comment stuff out. <gcc>
 " Plug 'ervandew/supertab'                                            "  allows you to use <Tab> for all your insert completion
 Plug 'SirVer/ultisnips'                                             " alias / snippets
-" Plug 'roxma/LanguageServer-php-neovim',  {
-"     \ 'for': 'php',
-"     \ 'do': 'composer install && composer run-script parse-stubs'
-"     \ }                                                             " PHP Language Server
-" Plug 'phpactor/phpactor' ,  {
-"     \ 'for': 'php', 
-"     \'do': 'composer install'
-"     \ }                                                             " PHP refactoring and introspection tools
-" Plug 'roxma/ncm-phpactor', { 'for': 'php' }                         " PHP phpactor integration for nvim-completion-manager
-Plug 'stanangeloff/php.vim', { 'for': 'php' }                       " PHP An up-to-date Vim syntax for PHP
 " Plug 'shawncplus/phpcomplete.vim', { 'for': 'php' }
-" Plug 'stephpy/vim-php-cs-fixer', {'for': 'php'} 
 Plug 'arnaud-lb/vim-php-namespace', { 'for': 'php' }                " PHP inserting use statements
-" Plug 'tobyS/pdv', { 'for': 'php' }                                  " PHP Documentor for VIM
+Plug 'tobyS/pdv', { 'for': 'php' }                                " PHP Documentor for VIM
 Plug 'joonty/vdebug', { 'for': 'php' }                              " Xdebug
 Plug 'evidens/vim-twig', {'for': ['html', 'twig']}                  " Twig HTML
-Plug 'fatih/vim-go', { 'do': 'GoInstallBinaries' }                  " Golang awesomness
-Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}                   " JS intellisense
+Plug 'fatih/vim-go', { 'for': 'go', 'do': 'GoInstallBinaries' }     " Golang awesomness
 Plug 'heavenshell/vim-jsdoc', { 'for': 'javascript' }               " JS Documentor
-Plug 'towolf/vim-helm'                                              " for helm charts
-Plug 'Yggdroot/indentLine'                                          " indentation markers
+Plug 'towolf/vim-helm', { 'for' : 'helm' }                          " for helm charts
+Plug 'janko-m/vim-test', { 'for': 'sql' }                           " run tests
 
 " All of your Plugs must be added before the following line
 call plug#end()
