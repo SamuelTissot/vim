@@ -21,18 +21,18 @@ Plug 'tpope/vim-vinegar'                                            " enhances n
 Plug 'tpope/vim-commentary'                                         " Comment stuff out. <gcc>
 " Plug 'ervandew/supertab'                                            "  allows you to use <Tab> for all your insert completion
 Plug 'SirVer/ultisnips'                                             " alias / snippets
-Plug 'roxma/LanguageServer-php-neovim',  {
-    \ 'for': 'php',
-    \ 'do': 'composer install && composer run-script parse-stubs'
-    \ }                                                             " PHP Language Server
-Plug 'phpactor/phpactor' ,  {
-    \ 'for': 'php', 
-    \'do': 'composer install'
-    \ }                                                             " PHP refactoring and introspection tools
-Plug 'roxma/ncm-phpactor', { 'for': 'php' }                         " PHP phpactor integration for nvim-completion-manager
+" Plug 'roxma/LanguageServer-php-neovim',  {
+"     \ 'for': 'php',
+"     \ 'do': 'composer install && composer run-script parse-stubs'
+"     \ }                                                             " PHP Language Server
+" Plug 'phpactor/phpactor' ,  {
+"     \ 'for': 'php', 
+"     \'do': 'composer install'
+"     \ }                                                             " PHP refactoring and introspection tools
+" Plug 'roxma/ncm-phpactor', { 'for': 'php' }                         " PHP phpactor integration for nvim-completion-manager
 Plug 'stanangeloff/php.vim', { 'for': 'php' }                       " PHP An up-to-date Vim syntax for PHP
-Plug 'shawncplus/phpcomplete.vim', { 'for': 'php' }
-Plug 'stephpy/vim-php-cs-fixer', {'for': 'php'} 
+" Plug 'shawncplus/phpcomplete.vim', { 'for': 'php' }
+" Plug 'stephpy/vim-php-cs-fixer', {'for': 'php'} 
 Plug 'arnaud-lb/vim-php-namespace', { 'for': 'php' }                " PHP inserting use statements
 " Plug 'tobyS/pdv', { 'for': 'php' }                                  " PHP Documentor for VIM
 Plug 'joonty/vdebug', { 'for': 'php' }                              " Xdebug

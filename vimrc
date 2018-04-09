@@ -32,6 +32,8 @@ set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
 set wildignore+=.DS_Store,.git,.hg,.svn
 set wildignore+=*~,*.swp,*.tmp
 
+set omnifunc=syntaxcomplete#Complete                                    " onmicompletion out of the box for vim.
+
 set undofile                                                          " maintain undo history between session 
 set undodir=~/.vim/undodir
 
