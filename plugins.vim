@@ -1,8 +1,11 @@
 
 " set the runtime path to include Vundle and initialize
 call plug#begin('~/.vim/bundle')
-Plug 'fenetikm/falcon'                                              " Theme
+" Plug 'fenetikm/falcon'                                              " Theme
 Plug 'itchyny/lightline.vim'                                        " status line
+Plug 'chriskempson/base16-vim'
+Plug 'daviesjamie/vim-base16-lightline'
+Plug 'christoomey/vim-tmux-navigator'                               " tmux  navigator
 Plug 'w0rp/ale'                                                     " Ale linting
 Plug 'sheerun/vim-polyglot'                                         " language pack
 Plug 'Yggdroot/indentLine'                                          " indentation markers
@@ -20,7 +23,7 @@ Plug 'tpope/vim-vinegar'                                            " enhances n
 Plug 'tpope/vim-commentary'                                         " Comment stuff out. <gcc>
 " Plug 'ervandew/supertab'                                            "  allows you to use <Tab> for all your insert completion
 Plug 'SirVer/ultisnips'                                             " alias / snippets
-" Plug 'shawncplus/phpcomplete.vim', { 'for': 'php' }
+Plug 'shawncplus/phpcomplete.vim', { 'for': 'php' }
 Plug 'arnaud-lb/vim-php-namespace', { 'for': 'php' }                " PHP inserting use statements
 Plug 'tobyS/pdv', { 'for': 'php' }                                " PHP Documentor for VIM
 Plug 'joonty/vdebug', { 'for': 'php' }                              " Xdebug
@@ -29,6 +32,7 @@ Plug 'fatih/vim-go', { 'for': 'go', 'do': 'GoInstallBinaries' }     " Golang awe
 Plug 'heavenshell/vim-jsdoc', { 'for': 'javascript' }               " JS Documentor
 Plug 'towolf/vim-helm', { 'for' : 'helm' }                          " for helm charts
 Plug 'janko-m/vim-test', { 'for': 'sql' }                           " run tests
+Plug 'JamshedVesuna/vim-markdown-preview', { 'for': 'markdown' }    " markdown preview
 
 " All of your Plugs must be added before the following line
 call plug#end()

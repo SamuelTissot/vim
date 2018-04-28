@@ -92,10 +92,13 @@ let g:terminal_color_15 = '#eeeeec'
 "-----------------------Theme---------------------------"
 "-----------------------Theme---------------------------"
 
-colorscheme falcon
-let g:falcon_lightline = 1
+if filereadable(expand("~/.vimrc_background"))
+  let base16colorspace=256
+  source ~/.vimrc_background
+endif
+
 let g:lightline = {
-      \ 'colorscheme': 'falcon',
+      \ 'colorscheme': 'base16'
       \ }
 
 "-----------------------Mappings------------------------"
@@ -121,21 +124,21 @@ nmap <leader>ep :tabedit ~/.vim/plugins.vim<cr>
 tnoremap <Esc> <C-\><C-n>
 
 "To use `ALT+{h,j,k,l}` to navigate windows from any mode: >
-if has('nvim')
-    tnoremap <C-h> <C-\><C-N><C-w>h
-    tnoremap <C-j> <C-\><C-N><C-w>j
-    tnoremap <C-k> <C-\><C-N><C-w>k
-    tnoremap <C-l> <C-\><C-N><C-w>l
-endif
+" if has('nvim')
+"     tnoremap <C-h> <C-\><C-N><C-w>h
+"     tnoremap <C-j> <C-\><C-N><C-w>j
+"     tnoremap <C-k> <C-\><C-N><C-w>k
+"     tnoremap <C-l> <C-\><C-N><C-w>l
+" endif
 
-inoremap <C-h> <C-\><C-N><C-w>h
-inoremap <C-j> <C-\><C-N><C-w>j
-inoremap <C-k> <C-\><C-N><C-w>k
-inoremap <C-l> <C-\><C-N><C-w>l
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
+" inoremap <C-h> <C-\><C-N><C-w>h
+" inoremap <C-j> <C-\><C-N><C-w>j
+" inoremap <C-k> <C-\><C-N><C-w>k
+" inoremap <C-l> <C-\><C-N><C-w>l
+" nnoremap <C-h> <C-w>h
+" nnoremap <C-j> <C-w>j
+" nnoremap <C-k> <C-w>k
+" nnoremap <C-l> <C-w>l
  
 
 "/
@@ -310,6 +313,12 @@ autocmd FileType javascript nmap <Leader>jd :JsDoc<cr>
 autocmd Filetype json nmap <leader>F :%!python -m json.tool<cr>
 
 
+"/
+"/ vim-polyglot
+"/
+let g:vim_markdown_conceal = 0
+
+
 "-----------------------Plugins------------------------"
 "-----------------------Plugins------------------------"
 "-----------------------Plugins------------------------"
@@ -405,9 +414,10 @@ let g:vdebug_options = {
 
 
 "/
-"/ octodown (markdown)
+"/ vim-markdown-preview
 "/
-autocmd FileType markdown let b:dispatch = 'octodown --live-reload %'
+let vim_markdown_preview_github=1
+
 
 "/
 "/ JSDOC
@@ -455,3 +465,6 @@ function! CallAntidoteSpellCheck()
 endfunction
  
 nmap <Leader>sc :call CallAntidoteSpellCheck()<CR>
+
+
+
