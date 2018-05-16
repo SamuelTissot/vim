@@ -199,35 +199,34 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
-
-call plug#begin('~/.vim/bundle')
+so ~/.vim/plugins.vim
 
 "
 "
 " ----------
 " ----------  THEME  ----------
-Plug 'chriskempson/base16-vim'
-let base16colorspace=256
-colorscheme base16-tomorrow-night
+"
+" chriskempson/base16-vim
+"
+if filereadable(expand("~/.vimrc_background"))
+  let base16colorspace=256
+  source ~/.vimrc_background
+endif
 
-Plug 'itchyny/lightline.vim' 
+"
+" itchyny/lightline.vim
+" 
 let g:lightline = {
       \ 'colorscheme': 'base16'
       \ }
-
-Plug 'daviesjamie/vim-base16-lightline'
-
-" indentation markers
-Plug 'Yggdroot/indentLine'
-
 
 "
 "
 "  ----------
 "  ----------  SYNTAX  ----------
-" language pack
-Plug 'sheerun/vim-polyglot'                                         
-" vim-polyglot
+"
+" sheerun/vim-polyglot
+"                                         
 let g:vim_markdown_conceal = 0
 
 "
@@ -235,34 +234,17 @@ let g:vim_markdown_conceal = 0
 "  ----------
 "  ----------  UTILITIES  ----------
 " Kick off builds and test suites using one of several asynchronous adapters
-Plug 'tpope/vim-dispatch'                                           
 "
-" extension for vim awesoness
-Plug 'tpope/vim-rhubarb'                                            
-"
-" enhances netrw
-Plug 'tpope/vim-vinegar'                                            
-"
-" for dispatch and Neovim
-Plug 'radenling/vim-dispatch-neovim'                                
-"
-" Comment stuff out. <gcc>
-Plug 'tpope/vim-commentary'                                         
-"
-" surround everything
-Plug 'tpope/vim-surround'                                           
-
-" allows you to use <Tab> for all your insert completion
-" Plug 'ervandew/supertab'                                          
-" alias / snippets
-
-Plug 'SirVer/ultisnips'                                             
+" SirVer/ultisnips
+"                                             
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 " run tests
-Plug 'janko-m/vim-test'                                             
+"
+" janko-m/vim-test
+"                                             
 nmap <Leader>tn :TestNearest<CR>
 nmap <Leader>tf :TestFile<CR>
 nmap <Leader>ts :TestSuite<CR>
@@ -274,25 +256,18 @@ let test#strategy = "neovim"
 "
 "
 "  ----------
-"  ----------  TMUX  ----------
-" tmux  navigator
-Plug 'christoomey/vim-tmux-navigator'                               
-
-"
-"
-"  ----------
 "  ----------  LINTING  ----------
-"" Ale linting
-Plug 'w0rp/ale'                                                     
+"
+" w0rp/ale
+"                                                     
 
 "
 "
 "  ----------
 "  ----------  SEARCH  ----------
-" serach everything
-Plug '/usr/local/opt/fzf'                                           
-" search everything
-Plug 'junegunn/fzf.vim'                                             
+"
+" junegunn/fzf.vim
+"                                             
 "Files [PATH]	    Files (similar to :FZF)
 " GFiles [OPTS]     Git files (git ls-files)
 " GFiles?	    Git files (git status)
@@ -333,14 +308,16 @@ nmap <Leader>f/ :History/<CR>
 nmap <Leader>fM :Maps<CR>
 nmap <Leader>fs :Filetypes<CR>
 
-" search tool from Vim
-Plug 'mileszs/ack.vim'                                              
+"
+" mileszs/ack.vim
+"                                              
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
 
-" search and replace across many files
-Plug 'skwp/greplace.vim'                                            
+"
+" skwp/greplace.vim
+"                                            
 "We want to use Ag for the search.
 set grepprg=ag								
 let g:grep_cmd_opts = '--line-numbers --noheading'
@@ -348,29 +325,19 @@ let g:grep_cmd_opts = '--line-numbers --noheading'
 "
 "
 "  ----------
-"  ----------  DATABASE  ----------
-Plug 'tpope/vim-dadbod'
-
-"
-"
-"  ----------
-"  ----------  GIT  ----------
-Plug 'tpope/vim-fugitive'
-
-"
-"
-"  ----------
 "  ----------  DEBUGING  ----------
-Plug 'joonty/vdebug'
+"
+" joonty/vdebug
+"
 let g:vdebug_options = {
     \ 'break_on_open': 0,
     \ 'port': '9071'
     \ }
     " \ 'path_maps': {'/var/www/html': '/Users/samuel.tissot/hub/src/github.com/lightspeedretail/mkt-backend-test'},
 
-    "
-    "
-    "  ----------
+"
+"
+"  ----------
 "  ----------  YAML  ----------
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
@@ -383,10 +350,9 @@ autocmd FileType php map <Leader>r :!php -f %<cr>
 " php lint
 autocmd FileType php map <Leader>l :w<cr>:!php -l %<cr>
 
-Plug 'shawncplus/phpcomplete.vim', { 'for': 'php' }
-
-" PHP inserting use statements
-Plug 'arnaud-lb/vim-php-namespace', { 'for': 'php' }                
+"
+" arnaud-lb/vim-php-namespace'
+"
 function! IPhpInsertUse()
  call PhpInsertUse()
  call feedkeys('a',  'n')
@@ -399,8 +365,9 @@ function! IPhpExpandClass()
 endfunction
 autocmd FileType php noremap <Leader>pc :call PhpExpandClass()<CR>
 
-" PHP Documentor for VIM
-Plug 'tobyS/pdv', { 'for': 'php' }                                  
+"
+" tobyS/pdv'
+" 
 nnoremap <leader>d :call pdv#DocumentWithSnip()<CR>
 let g:pdv_template_dir = $HOME ."/.vim/bundle/pdv/templates_snip"
  
@@ -426,14 +393,10 @@ let g:pdv_template_dir = $HOME ."/.vim/bundle/pdv/templates_snip"
 "
 "
 "  ----------
-"  ----------  HTML/TWIG  ----------
-Plug 'evidens/vim-twig', {'for': ['html', 'twig']}                  " Twig HTML
-
-"
-"
-"  ----------
 "  ----------  GOLANG  ----------
-Plug 'fatih/vim-go', { 'for': 'go', 'do': 'GoInstallBinaries' }     " Golang awesomness
+"
+" fatih/vim-go'
+" 
 " run :GoBuild or :GoTestCompile based on the go file
 function! s:build_go_files()
   let l:file = expand('%')
@@ -463,8 +426,9 @@ autocmd FileType go nmap <leader>dr :call GoDebug()
 " run code
 autocmd Filetype js nmap <Leader>r :!node %<cr>
 
-" JS Documentor
-Plug 'heavenshell/vim-jsdoc', { 'for': 'javascript' }               
+"
+" heavenshell/vim-jsdoc'
+"
 let g:jsdoc_allow_input_prompt=1
 let g:jsdoc_input_description=1
 let g:jsdoc_enable_es6=1
@@ -476,25 +440,19 @@ autocmd Filetype json nmap <leader>F :%!python -m json.tool<cr>
 "
 "  ----------
 "  ----------  HELM  ----------
+"
+" towolf/vim-helm'
+"
 autocmd BufNewFile,BufRead *.tpl   set filetype=yaml
 autocmd BufRead,BufNewFile */templates/*.yaml,*/templates/*.tpl set filetype=helm
-"
-" for helm charts
-Plug 'towolf/vim-helm', { 'for' : 'helm' }                          
-
-"
-"
-"  ----------
-"  ----------  KUBERNETES  ----------
-Plug 'c9s/helper.vim'
-Plug 'c9s/treemenu.vim'
-Plug 'c9s/vikube.vim'
 
 "
 "
 "  ----------
 "  ----------  MARKDOWN  ----------
-Plug 'JamshedVesuna/vim-markdown-preview', { 'for': 'markdown' }
+"
+" JamshedVesuna/vim-markdown-preview'
+"
 let vim_markdown_preview_github=1
 
 "
@@ -507,14 +465,6 @@ function! CallAntidoteSpellCheck()
   call system("open -a /Applications/Antidote\\ 9.app ".bufname("%"))
 endfunction
 nmap <Leader>sc :call CallAntidoteSpellCheck()<CR>
-
-" 
-" 
-" ----------
-" ----------  END  ----------
-" All of your Plugs must be added before the following line
-call plug#end()
-
 
 
 
