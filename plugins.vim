@@ -34,7 +34,7 @@ Plug 'janko-m/vim-test'                                             " run tests
 "
 "  ----------
 "  ----------  LINTING  ----------
-" Plug 'w0rp/ale'                                                     " Ale linting
+Plug 'w0rp/ale'                                                     " Ale linting
 "
 "
 "  ----------
