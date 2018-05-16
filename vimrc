@@ -13,7 +13,6 @@ so ~/.vim/plugins.vim
 syntax enable
 set backspace=indent,eol,start                                          "Make backspace behave like every other editor.
 set number								"Let's activate line numbers.
-set relativenumber 
 set noerrorbells visualbell t_vb=               			"No damn bells!
 set autowriteall                                                        "Automatically write the file when switching buffers.
 set tabstop=8
@@ -31,6 +30,10 @@ set wildignore+=*.a,*.o
 set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
 set wildignore+=.DS_Store,.git,.hg,.svn
 set wildignore+=*~,*.swp,*.tmp
+
+
+set lazyredraw                                                      " buffer the refresh rate
+set cul!
 
 set omnifunc=syntaxcomplete#Complete                                    " onmicompletion out of the box for vim.
 
@@ -236,17 +239,17 @@ autocmd FileType php map <Leader>r :!php -f %<cr>
 " php lint
 nmap <Leader>pl :w<cr>:!php -l %<cr>
 
- " function! IPhpInsertUse()
- "     call PhpInsertUse()
- "     call feedkeys('a',  'n')
- " endfunction
- " autocmd FileType php noremap <Leader>pu :call PhpInsertUse()<CR>
+function! IPhpInsertUse()
+ call PhpInsertUse()
+ call feedkeys('a',  'n')
+endfunction
+autocmd FileType php noremap <Leader>pu :call PhpInsertUse()<CR>
 
- " function! IPhpExpandClass()
- "     call PhpExpandClass()
- "     call feedkeys('a', 'n')
- " endfunction
- " autocmd FileType php noremap <Leader>pc :call PhpExpandClass()<CR>
+function! IPhpExpandClass()
+ call PhpExpandClass()
+ call feedkeys('a', 'n')
+endfunction
+autocmd FileType php noremap <Leader>pc :call PhpExpandClass()<CR>
 
 " Sort PHP use statements http://stackoverflow.com/questions/11531073/how-do-you-sort-a-range-of-lines-by-length
 vmap <Leader>su ! awk '{ print length(), $0 \| "sort -n \| cut -d\\  -f2-" }'<cr>
@@ -257,13 +260,13 @@ vmap <Leader>su ! awk '{ print length(), $0 \| "sort -n \| cut -d\\  -f2-" }'<cr
 "/
 "/ PHPactor
 "/
-autocmd FileType php setlocal omnifunc=phpactor#Complete
-nmap <Leader>pu :call phpactor#UseAdd()<CR>                       " Include use statement
-nmap <Leader>pm :call phpactor#ContextMenu()<CR>                 " Invoke the context menu
-nmap <Leader>po :call phpactor#GotoDefinition()<CR>               " Goto definition of class or class member under the cursor
-nmap <Leader>pt :call phpactor#Transform()<CR>                   " Transform the classes in the current file
-nmap <Leader>pc :call phpactor#ClassNew()<CR>                    " Generate a new class (replacing the current file)
-vmap <silent><Leader>pe :<C-U>call phpactor#ExtractMethod()<CR>  " Extract method from selection
+" autocmd FileType php setlocal omnifunc=phpactor#Complete
+" nmap <Leader>pu :call phpactor#UseAdd()<CR>                       " Include use statement
+" nmap <Leader>pm :call phpactor#ContextMenu()<CR>                 " Invoke the context menu
+" nmap <Leader>po :call phpactor#GotoDefinition()<CR>               " Goto definition of class or class member under the cursor
+" nmap <Leader>pt :call phpactor#Transform()<CR>                   " Transform the classes in the current file
+" nmap <Leader>pc :call phpactor#ClassNew()<CR>                    " Generate a new class (replacing the current file)
+" vmap <silent><Leader>pe :<C-U>call phpactor#ExtractMethod()<CR>  " Extract method from selection
 
 
 
@@ -338,7 +341,7 @@ let g:vim_markdown_conceal = 0
 "/
 "/ vim-test
 "/
-nmap <Leader>tm :TestNearest<CR>
+nmap <Leader>tn :TestNearest<CR>
 nmap <Leader>tf :TestFile<CR>
 nmap <Leader>ts :TestSuite<CR>
 nmap <Leader>tl :TestLast<CR>
@@ -407,10 +410,11 @@ let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 "/ VDEBUG
 "/
 let g:vdebug_options = {
-    \ 'break_on_open': 1,
-    \ 'path_maps': {'/var/www/html': '/Users/samuel.tissot/hub/src/github.com/lightspeedretail/hq'},
-    \ 'port': '9000',
+    \ 'break_on_open': 0,
+    \ 'port': '9071'
     \ }
+
+    " \ 'path_maps': {'/var/www/html': '/Users/samuel.tissot/hub/src/github.com/lightspeedretail/mkt-backend-test'},
 
 
 "/
