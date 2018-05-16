@@ -1,79 +1,172 @@
-set nocompatible              						"pWe want the latest Vim settings/options.
-
-so ~/.vim/splash.vim
-
-" Plug
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-so ~/.vim/plugins.vim
-
+"
+"
+"
+" -----------------------------------------------------------------------
+" -----------------------------------------------------------------------
+" -----------------------------------------------------------------------
+" -----------------------------------------------------------------------
+  " BASE SETTINGS
+" -----------------------------------------------------------------------
+" We want the latest Vim settings/options.
+set nocompatible              						
 syntax enable
-set backspace=indent,eol,start                                          "Make backspace behave like every other editor.
-set number								"Let's activate line numbers.
-set noerrorbells visualbell t_vb=               			"No damn bells!
-set autowriteall                                                        "Automatically write the file when switching buffers.
+" Make backspace behave like every other editor.
+set backspace=indent,eol,start                                          
+"Let's activate line numbers.
+set number								
+"No damn bells!
+set noerrorbells visualbell t_vb=               			
+"Automatically write the file when switching buffers.
+set autowriteall                                                        
 set tabstop=8
 set expandtab
 set softtabstop=4
 set shiftwidth=4
-set ignorecase                                                        " ignre case in search
-set tags=tags;                                                        " for ctags
-set updatetime=100                                                    " update time for that status line
+" ignre case in search
+set ignorecase                                                        
+" for ctags
+set tags=tags;                                                        
+" update time for that status line
+set updatetime=100                                                    
 set mouse=a
-set hidden                                                              " Required for operations modifying multiple buffers like rename.
-" vim ignore
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip                              " MacOSX/Linux
+" Required for operations modifying multiple buffers like rename.
+set hidden                                                              
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip                              
 set wildignore+=*.a,*.o
 set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
 set wildignore+=.DS_Store,.git,.hg,.svn
 set wildignore+=*~,*.swp,*.tmp
-
-
-set lazyredraw                                                      " buffer the refresh rate
+" buffer the refresh rate
+set lazyredraw                                                      
 set cul!
-
-set omnifunc=syntaxcomplete#Complete                                    " onmicompletion out of the box for vim.
-
-set undofile                                                          " maintain undo history between session 
+" maintain undo history between session 
+set undofile                                                          
 set undodir=~/.vim/undodir
-
-
+" theme
+" better colors
 if (has("termguicolors"))
     set termguicolors
 endif
-
-set guioptions-=l                                                       "Disable Gui scrollbars.
+"Disable Gui scrollbars.
+set guioptions-=l                                                       
 set guioptions-=L
 set guioptions-=r
 set guioptions-=R
-
 "Get rid of ugly split borders.
 hi vertsplit guifg=bg guibg=bg
 
 " Search
-set hlsearch								"Highlight all matched terms.
-set incsearch								"Incrementally highlight, as we type.
+"Highlight all matched terms.
+set hlsearch								
+"Incrementally highlight, as we type.
+set incsearch								
+"Add simple highlight removal.
+nmap <Leader><space> :nohlsearch<cr>
 
 " Split Management
-set splitbelow 								"Make splits default to below...
-set splitright								"And to the right. This feels more natural.
+"Make splits default to below...
+set splitbelow 								
+"And to the right. This feels more natural.
+set splitright								
 
 " spelling
 setlocal spell spelllang=en_us
 set dictionary+=/usr/share/dict/words
 
-autocmd BufNewFile,BufRead *.zsh setlocal filetype=zsh
-
 " completion
-" set completeopt=longest,menuone
-set complete=.,w,b,u 							"Set our desired autocompletion matching.
+"Set our desired autocompletion matching.
+set complete=.,w,b,u 							
+" onmicompletion out of the box for vim.
+set omnifunc=syntaxcomplete#Complete                                    
+"set completeopt=longest,menuone
+"
+""The default is \, but a SPACE is much better.
+" let mapleader = "\<Space>" 						 
+nmap <Space> <Leader>
 
-"-----------------------term----------------------------"
-"-----------------------term----------------------------"
-"-----------------------term----------------------------"
+"
+"
+"
+" -----------------------------------------------------------------------
+" -----------------------------------------------------------------------
+" -----------------------------------------------------------------------
+" -----------------------------------------------------------------------
+  " FILETYPE
+" -----------------------------------------------------------------------
+autocmd BufNewFile,BufRead *.zsh setlocal filetype=zsh
+autocmd BufNewFile,BufRead *.conf setlocal filetype=nginx
+
+"
+"
+"
+" -----------------------------------------------------------------------
+" -----------------------------------------------------------------------
+" -----------------------------------------------------------------------
+" -----------------------------------------------------------------------
+  " PERSONAL CUSTOMIZATION
+" -----------------------------------------------------------------------
+so ~/.vim/splash.vim
+" insert new line without entering insert mode
+" shift+enter
+" enter
+nmap <S-Enter> O<Esc>
+nmap <CR> o<Esc> 
+
+"Make it easy to edit the Vimrc file.
+nmap <Leader>ev :tabedit $MYVIMRC<cr>
+nmap <Leader>es :e ~/.vim/snippets/
+nmap <leader>ep :tabedit ~/.vim/plugins.vim<cr>
+
+"To map <Esc> to exit terminal-mode:
+tnoremap <Esc> <C-\><C-n>
+
+" NOTES 
+nmap <Leader>n :tabedit $NOTES<cr>
+
+"/ SRACTCH 
+nmap <Leader>s :tabedit $SCRATCH<cr>
+
+"/ Navigation management
+map <Leader>qn :cnext<CR>
+map <Leader>qp :cprevious<CR>
+nnoremap <leader>qc :cclose<CR>
+
+"/ Movement mappings
+inoremap ;; <Esc>A;<Esc>
+imap jj <Esc>
+
+"/ rename word under cursor
+nnoremap <Leader>rn :%s/\<<C-r><C-w>\>//g<Left><Left>
+
+"/ Ctags
+"Quickly browse to any tag/symbol in the project.
+"Tip: run ctags -R to regenerated the index.
+nmap <Leader>tf :tag<space>
+nmap <Leader>tg :!ctags -R
+
+"/ NERTW
+let g:netrw_banner = 1
+"let g:netrw_browse_split = 4
+let g:netrw_winsize = 25
+
+"/ CAPLOCK automatic
+" Execute 'lnoremap x X' and 'lnoremap X x' for each letter a-z.
+for c in range(char2nr('A'), char2nr('Z'))
+  execute 'lnoremap ' . nr2char(c+32) . ' ' . nr2char(c)
+  execute 'lnoremap ' . nr2char(c) . ' ' . nr2char(c+32)
+endfor
+" Kill the capslock when leaving insert mode.
+autocmd InsertLeave * set iminsert=0
+
+"
+"
+"
+" -----------------------------------------------------------------------
+" -----------------------------------------------------------------------
+" -----------------------------------------------------------------------
+" -----------------------------------------------------------------------
+  " NEOVIM TERMINAL COLORS
+" -----------------------------------------------------------------------
 let g:terminal_color_0  = '#2e3436'
 let g:terminal_color_1  = '#cc0000'
 let g:terminal_color_2  = '#4e9a06'
@@ -91,104 +184,115 @@ let g:terminal_color_13 = '#ad7fa8'
 let g:terminal_color_14 = '#00f5e9'
 let g:terminal_color_15 = '#eeeeec'
 
-"-----------------------Theme---------------------------"
-"-----------------------Theme---------------------------"
-"-----------------------Theme---------------------------"
-
-if filereadable(expand("~/.vimrc_background"))
-  let base16colorspace=256
-  source ~/.vimrc_background
+"
+"
+"
+" -----------------------------------------------------------------------
+" -----------------------------------------------------------------------
+" -----------------------------------------------------------------------
+" -----------------------------------------------------------------------
+  " PLUGINS 
+" -----------------------------------------------------------------------
+" Plug
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+call plug#begin('~/.vim/bundle')
+
+"
+"
+" ----------
+" ----------  THEME  ----------
+Plug 'chriskempson/base16-vim'
+let base16colorspace=256
+colorscheme base16-tomorrow-night
+
+Plug 'itchyny/lightline.vim' 
 let g:lightline = {
       \ 'colorscheme': 'base16'
       \ }
 
-"-----------------------Mappings------------------------"
-"-----------------------Mappings------------------------"
-"-----------------------Mappings------------------------"
+Plug 'daviesjamie/vim-base16-lightline'
+
+" indentation markers
+Plug 'Yggdroot/indentLine'
+
+
 "
-" let mapleader = "\<Space>" 						 "The default is \, but a SPACE is much better.
-nmap <Space> <Leader>
+"
+"  ----------
+"  ----------  SYNTAX  ----------
+" language pack
+Plug 'sheerun/vim-polyglot'                                         
+" vim-polyglot
+let g:vim_markdown_conceal = 0
 
-"/
-"/ VIM Configs 
-"/
-"Make it easy to edit the Vimrc file.
-nmap <Leader>ev :tabedit $MYVIMRC<cr>
-nmap <Leader>es :e ~/.vim/snippets/
-nmap <leader>ep :tabedit ~/.vim/plugins.vim<cr>
+"
+"
+"  ----------
+"  ----------  UTILITIES  ----------
+" Kick off builds and test suites using one of several asynchronous adapters
+Plug 'tpope/vim-dispatch'                                           
+"
+" extension for vim awesoness
+Plug 'tpope/vim-rhubarb'                                            
+"
+" enhances netrw
+Plug 'tpope/vim-vinegar'                                            
+"
+" for dispatch and Neovim
+Plug 'radenling/vim-dispatch-neovim'                                
+"
+" Comment stuff out. <gcc>
+Plug 'tpope/vim-commentary'                                         
+"
+" surround everything
+Plug 'tpope/vim-surround'                                           
 
+" allows you to use <Tab> for all your insert completion
+" Plug 'ervandew/supertab'                                          
+" alias / snippets
 
-"/
-"/ Split Management
-"/
-"To map <Esc> to exit terminal-mode: >
-tnoremap <Esc> <C-\><C-n>
+Plug 'SirVer/ultisnips'                                             
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
-"To use `ALT+{h,j,k,l}` to navigate windows from any mode: >
-" if has('nvim')
-"     tnoremap <C-h> <C-\><C-N><C-w>h
-"     tnoremap <C-j> <C-\><C-N><C-w>j
-"     tnoremap <C-k> <C-\><C-N><C-w>k
-"     tnoremap <C-l> <C-\><C-N><C-w>l
-" endif
+" run tests
+Plug 'janko-m/vim-test'                                             
+nmap <Leader>tn :TestNearest<CR>
+nmap <Leader>tf :TestFile<CR>
+nmap <Leader>ts :TestSuite<CR>
+nmap <Leader>tl :TestLast<CR>
+nmap <Leader>tv :TestVisit<CR>
+" make test commands execute using dispatch.vim
+let test#strategy = "neovim"
 
-" inoremap <C-h> <C-\><C-N><C-w>h
-" inoremap <C-j> <C-\><C-N><C-w>j
-" inoremap <C-k> <C-\><C-N><C-w>k
-" inoremap <C-l> <C-\><C-N><C-w>l
-" nnoremap <C-h> <C-w>h
-" nnoremap <C-j> <C-w>j
-" nnoremap <C-k> <C-w>k
-" nnoremap <C-l> <C-w>l
- 
+"
+"
+"  ----------
+"  ----------  TMUX  ----------
+" tmux  navigator
+Plug 'christoomey/vim-tmux-navigator'                               
 
-"/
-"/ NOTES 
-"/
-nmap <Leader>n :tabedit $NOTES<cr>
+"
+"
+"  ----------
+"  ----------  LINTING  ----------
+"" Ale linting
+Plug 'w0rp/ale'                                                     
 
-"/
-"/ SRACTCH 
-"/
-nmap <Leader>s :tabedit $SCRATCH<cr>
-
-"/
-"/ Navigation management
-"/
-map <Leader>qn :cnext<CR>
-map <Leader>qp :cprevious<CR>
-nnoremap <leader>qc :cclose<CR>
-
-"/
-"/ Movement mappings
-"/
-inoremap ;; <Esc>A;<Esc>
-imap jj <Esc>
-
-"/
-"/ Operation Mappings
-"/
-nnoremap <Leader>rw :%s/\<<C-r><C-w>\>//g<Left><Left>
-
-"/
-"/ Visual mappings
-"/
-"Add simple highlight removal.
-nmap <Leader><space> :nohlsearch<cr>
-
-"/
-"/ Ctags
-"/
-"Quickly browse to any tag/symbol in the project.
-"Tip: run ctags -R to regenerated the index.
-nmap <Leader>tf :tag<space>
-nmap <Leader>tg :!ctags -R
-
-"/
-"/ FZF
-"/
+"
+"
+"  ----------
+"  ----------  SEARCH  ----------
+" serach everything
+Plug '/usr/local/opt/fzf'                                           
+" search everything
+Plug 'junegunn/fzf.vim'                                             
 "Files [PATH]	    Files (similar to :FZF)
 " GFiles [OPTS]     Git files (git ls-files)
 " GFiles?	    Git files (git status)
@@ -229,16 +333,60 @@ nmap <Leader>f/ :History/<CR>
 nmap <Leader>fM :Maps<CR>
 nmap <Leader>fs :Filetypes<CR>
 
+" search tool from Vim
+Plug 'mileszs/ack.vim'                                              
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
 
-"/
-"/ PHP mappings
-"/
+" search and replace across many files
+Plug 'skwp/greplace.vim'                                            
+"We want to use Ag for the search.
+set grepprg=ag								
+let g:grep_cmd_opts = '--line-numbers --noheading'
+
+"
+"
+"  ----------
+"  ----------  DATABASE  ----------
+Plug 'tpope/vim-dadbod'
+
+"
+"
+"  ----------
+"  ----------  GIT  ----------
+Plug 'tpope/vim-fugitive'
+
+"
+"
+"  ----------
+"  ----------  DEBUGING  ----------
+Plug 'joonty/vdebug'
+let g:vdebug_options = {
+    \ 'break_on_open': 0,
+    \ 'port': '9071'
+    \ }
+    " \ 'path_maps': {'/var/www/html': '/Users/samuel.tissot/hub/src/github.com/lightspeedretail/mkt-backend-test'},
+
+    "
+    "
+    "  ----------
+"  ----------  YAML  ----------
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+
+"
+"
+"  ----------
+"  ----------  PHP  ----------
 " run code
 autocmd FileType php map <Leader>r :!php -f %<cr>
-
 " php lint
-nmap <Leader>pl :w<cr>:!php -l %<cr>
+autocmd FileType php map <Leader>l :w<cr>:!php -l %<cr>
 
+Plug 'shawncplus/phpcomplete.vim', { 'for': 'php' }
+
+" PHP inserting use statements
+Plug 'arnaud-lb/vim-php-namespace', { 'for': 'php' }                
 function! IPhpInsertUse()
  call PhpInsertUse()
  call feedkeys('a',  'n')
@@ -251,15 +399,12 @@ function! IPhpExpandClass()
 endfunction
 autocmd FileType php noremap <Leader>pc :call PhpExpandClass()<CR>
 
-" Sort PHP use statements http://stackoverflow.com/questions/11531073/how-do-you-sort-a-range-of-lines-by-length
-vmap <Leader>su ! awk '{ print length(), $0 \| "sort -n \| cut -d\\  -f2-" }'<cr>
-
-" vim-php-cs-fixer.vim 
- nnoremap <silent><leader>F :w \| call PhpCsFixerFixFile()<CR>
+" PHP Documentor for VIM
+Plug 'tobyS/pdv', { 'for': 'php' }                                  
+nnoremap <leader>d :call pdv#DocumentWithSnip()<CR>
+let g:pdv_template_dir = $HOME ."/.vim/bundle/pdv/templates_snip"
  
-"/
 "/ PHPactor
-"/
 " autocmd FileType php setlocal omnifunc=phpactor#Complete
 " nmap <Leader>pu :call phpactor#UseAdd()<CR>                       " Include use statement
 " nmap <Leader>pm :call phpactor#ContextMenu()<CR>                 " Invoke the context menu
@@ -268,18 +413,27 @@ vmap <Leader>su ! awk '{ print length(), $0 \| "sort -n \| cut -d\\  -f2-" }'<cr
 " nmap <Leader>pc :call phpactor#ClassNew()<CR>                    " Generate a new class (replacing the current file)
 " vmap <silent><Leader>pe :<C-U>call phpactor#ExtractMethod()<CR>  " Extract method from selection
 
+"/ nvim-completion-manager
+"
+" let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
+" let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
+" let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
+" let g:UltiSnipsRemoveSelectModeMappings = 0
+" " optional
+" inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ultisnips_expand)")<cr>
+" let g:cm_completekeys = "\<Plug>(cm_omnifunc)"
 
+"
+"
+"  ----------
+"  ----------  HTML/TWIG  ----------
+Plug 'evidens/vim-twig', {'for': ['html', 'twig']}                  " Twig HTML
 
-
-"/
-"/ JS mappings 
-"/
-" run code
-autocmd Filetype js nmap <Leader>r :!node %<cr>
-
-"/
-"/ vim-go
-"/
+"
+"
+"  ----------
+"  ----------  GOLANG  ----------
+Plug 'fatih/vim-go', { 'for': 'go', 'do': 'GoInstallBinaries' }     " Golang awesomness
 " run :GoBuild or :GoTestCompile based on the go file
 function! s:build_go_files()
   let l:file = expand('%')
@@ -289,186 +443,105 @@ function! s:build_go_files()
     call go#cmd#Build(0)
   endif
 endfunction
-
 autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
 autocmd FileType go nmap <leader>r  <Plug>(go-run)
 autocmd FileType go nmap <Leader>i <Plug>(go-info)
-
-
-"/
-"/ vim-godebug
-"/
-autocmd FileType go nmap <leader>dp :call GoToggleBreakpoint()
-autocmd FileType go nmap <leader>dr :call GoDebug()
-
-"/
-"/ pdv
-"/
-nnoremap <leader>d :call pdv#DocumentWithSnip()<CR>
-
-
-
-"/
-"/ jsdoc
-"/
-autocmd FileType javascript nmap <Leader>jd :JsDoc<cr>
-
-autocmd Filetype json nmap <leader>F :%!python -m json.tool<cr>
-
-
-"/
-"/ vim-polyglot
-"/
-let g:vim_markdown_conceal = 0
-
-
-"-----------------------Plugins------------------------"
-"-----------------------Plugins------------------------"
-"-----------------------Plugins------------------------"
-
-
-"/
-"/ nvim-completion-manager
-"/
- " let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
-" let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
-" let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
-" let g:UltiSnipsRemoveSelectModeMappings = 0
-" " optional
-" inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ultisnips_expand)")<cr>
-" let g:cm_completekeys = "\<Plug>(cm_omnifunc)"
-
-"/
-"/ vim-test
-"/
-nmap <Leader>tn :TestNearest<CR>
-nmap <Leader>tf :TestFile<CR>
-nmap <Leader>ts :TestSuite<CR>
-nmap <Leader>tl :TestLast<CR>
-nmap <Leader>tv :TestVisit<CR>
-" make test commands execute using dispatch.vim
-let test#strategy = "neovim"
-
-
-"/
-"/ YAML
-"/
-autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
-
-
-"/ 
-"/ NERTW
-"/t 
-let g:netrw_banner = 1
-"let g:netrw_browse_split = 4
-let g:netrw_winsize = 25
-
-"/
-"/ VIM-GO
-"/
 let g:go_fmt_command = "goimports"
 let g:go_auto_type_info = 1
 " beautify (may slow down vim)
 let g:go_highlight_types = 1
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
+" debug
+autocmd FileType go nmap <leader>dp :call GoToggleBreakpoint()
+autocmd FileType go nmap <leader>dr :call GoDebug()
 
+"
+"
+"  ----------
+"  ----------  JAVASCRIPT  ----------
+" run code
+autocmd Filetype js nmap <Leader>r :!node %<cr>
 
-"/
-"/ Greplace.vim
-"/
-set grepprg=ag								"We want to use Ag for the search.
-let g:grep_cmd_opts = '--line-numbers --noheading'
-
-
-"/
-"/ Ack.vim
-"/
-if executable('ag')
-  let g:ackprg = 'ag --vimgrep'
-endif
-
-"/
-"/ vim-php-cs-fixer.vim
-"/
-let g:php_cs_fixer_level = "psr2"  
-
-"/
-"/ pdv
-"/
-let g:pdv_template_dir = $HOME ."/.vim/bundle/pdv/templates_snip"
-
-"/
-""/ Ultisnips
-""/
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-
-
-"/
-"/ VDEBUG
-"/
-let g:vdebug_options = {
-    \ 'break_on_open': 0,
-    \ 'port': '9071'
-    \ }
-
-    " \ 'path_maps': {'/var/www/html': '/Users/samuel.tissot/hub/src/github.com/lightspeedretail/mkt-backend-test'},
-
-
-"/
-"/ vim-markdown-preview
-"/
-let vim_markdown_preview_github=1
-
-
-"/
-"/ JSDOC
-"/
-
+" JS Documentor
+Plug 'heavenshell/vim-jsdoc', { 'for': 'javascript' }               
 let g:jsdoc_allow_input_prompt=1
 let g:jsdoc_input_description=1
 let g:jsdoc_enable_es6=1
+autocmd FileType javascript nmap <Leader>jd :JsDoc<cr>
+autocmd Filetype json nmap <leader>F :%!python -m json.tool<cr>
 
 
-"/
-"/ vim-helm
-"/
+"
+"
+"  ----------
+"  ----------  HELM  ----------
 autocmd BufNewFile,BufRead *.tpl   set filetype=yaml
 autocmd BufRead,BufNewFile */templates/*.yaml,*/templates/*.tpl set filetype=helm
+"
+" for helm charts
+Plug 'towolf/vim-helm', { 'for' : 'helm' }                          
 
-"-------------Auto-Commands--------------"
-"Automatically source the Vimrc file on save.
-" if has("autocmd")
-"   autocmd bufwritepost vimrc source $MYVIMRC
-" endif
+"
+"
+"  ----------
+"  ----------  KUBERNETES  ----------
+Plug 'c9s/helper.vim'
+Plug 'c9s/treemenu.vim'
+Plug 'c9s/vikube.vim'
 
+"
+"
+"  ----------
+"  ----------  MARKDOWN  ----------
+Plug 'JamshedVesuna/vim-markdown-preview', { 'for': 'markdown' }
+let vim_markdown_preview_github=1
 
- 
-"-----------Special functionality---------"
-
-"/
-"/ CAPLOCK automatic
-"/
-" Execute 'lnoremap x X' and 'lnoremap X x' for each letter a-z.
-for c in range(char2nr('A'), char2nr('Z'))
-  execute 'lnoremap ' . nr2char(c+32) . ' ' . nr2char(c)
-  execute 'lnoremap ' . nr2char(c) . ' ' . nr2char(c+32)
-endfor
-" Kill the capslock when leaving insert mode.
-autocmd InsertLeave * set iminsert=0
-
-
-"/
-"/ Antidote
-"/
+"
+"
+"  ----------
+"  ----------  SPELLING  ----------
+" Antidote
 function! CallAntidoteSpellCheck()
   :w
   call system("open -a /Applications/Antidote\\ 9.app ".bufname("%"))
 endfunction
- 
 nmap <Leader>sc :call CallAntidoteSpellCheck()<CR>
+
+" 
+" 
+" ----------
+" ----------  END  ----------
+" All of your Plugs must be added before the following line
+call plug#end()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
 
 
 

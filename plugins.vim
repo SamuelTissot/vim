@@ -1,7 +1,6 @@
 
 " set the runtime path to include Vundle and initialize
 call plug#begin('~/.vim/bundle')
-" Plug 'fenetikm/falcon'                                              " Theme
 Plug 'itchyny/lightline.vim'                                        " status line
 Plug 'chriskempson/base16-vim'
 Plug 'daviesjamie/vim-base16-lightline'
