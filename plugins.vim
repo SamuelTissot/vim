@@ -46,6 +46,11 @@ Plug 'skwp/greplace.vim'                                            " search and
 "
 "
 "  ----------
+"  ----------  COMPLETION  ----------
+Plug 'ludovicchabant/vim-gutentags'
+"
+"
+"  ----------
 "  ----------  DEBUGING  ----------
 Plug 'joonty/vdebug'                                                " Xdebug
 "

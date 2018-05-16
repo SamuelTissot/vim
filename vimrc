@@ -217,7 +217,18 @@ endif
 " itchyny/lightline.vim
 " 
 let g:lightline = {
-      \ 'colorscheme': 'base16'
+      \ 'colorscheme': 'base16',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'readonly', 'gitbranch', 'modified', 'filename' ] ],
+      \   'right': [ [ 'lineinfo' ],
+      \              [ 'percent' ],
+      \              [ 'fileformat', 'fileencoding', 'filetype', 'gutentags' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head',
+      \   'gutentags': 'gutentags#statusline'
+      \ },
       \ }
 
 "
@@ -259,7 +270,13 @@ let test#strategy = "neovim"
 "  ----------  LINTING  ----------
 "
 " w0rp/ale
-"                                                     
+"
+let g:ale_completion_enabled = 0
+let g:ale_linters = {
+\   'php': ['php'],
+\}
+let g:ale_lint_on_save = 1
+let g:ale_lint_on_text_changed = 0
 
 "
 "
@@ -325,6 +342,22 @@ let g:grep_cmd_opts = '--line-numbers --noheading'
 "
 "
 "  ----------
+"  ----------  COMPLETION  ----------
+"
+" ludovicchabant/vimgutentags
+"
+" add >> --PHP-kinds=+cfit-va << to you ~/.ctags
+" This way I get tags for classes, interfaces, functions, namespaces and traits, while variables and aliases are ignored to remove the noise level.
+let g:gutentags_cache_dir = '~/.vim/gutentags'
+let g:gutentags_ctags_exclude = ['*.css', '*.html', '*.js', '*.json', '*.xml',
+                            \ '*.phar', '*.ini', '*.rst', '*.md',
+                            \ '*vendor/*/test*', '*vendor/*/Test*',
+                            \ '*vendor/*/fixture*', '*vendor/*/Fixture*',
+                            \ '*var/cache*', '*var/log*']
+
+"
+"
+"  ----------
 "  ----------  DEBUGING  ----------
 "
 " joonty/vdebug
@@ -371,25 +404,6 @@ autocmd FileType php noremap <Leader>pc :call PhpExpandClass()<CR>
 nnoremap <leader>d :call pdv#DocumentWithSnip()<CR>
 let g:pdv_template_dir = $HOME ."/.vim/bundle/pdv/templates_snip"
  
-"/ PHPactor
-" autocmd FileType php setlocal omnifunc=phpactor#Complete
-" nmap <Leader>pu :call phpactor#UseAdd()<CR>                       " Include use statement
-" nmap <Leader>pm :call phpactor#ContextMenu()<CR>                 " Invoke the context menu
-" nmap <Leader>po :call phpactor#GotoDefinition()<CR>               " Goto definition of class or class member under the cursor
-" nmap <Leader>pt :call phpactor#Transform()<CR>                   " Transform the classes in the current file
-" nmap <Leader>pc :call phpactor#ClassNew()<CR>                    " Generate a new class (replacing the current file)
-" vmap <silent><Leader>pe :<C-U>call phpactor#ExtractMethod()<CR>  " Extract method from selection
-
-"/ nvim-completion-manager
-"
-" let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
-" let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
-" let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
-" let g:UltiSnipsRemoveSelectModeMappings = 0
-" " optional
-" inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ultisnips_expand)")<cr>
-" let g:cm_completekeys = "\<Plug>(cm_omnifunc)"
-
 "
 "
 "  ----------
