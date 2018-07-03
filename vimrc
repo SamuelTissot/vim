@@ -18,6 +18,7 @@ set number
 set noerrorbells visualbell t_vb=               			
 "Automatically write the file when switching buffers.
 set autowriteall                                                        
+set autowrite
 set tabstop=8
 set expandtab
 set softtabstop=4
@@ -39,9 +40,32 @@ set wildignore+=*~,*.swp,*.tmp
 " buffer the refresh rate
 set lazyredraw                                                      
 set cul!
+" ... but not it begins with upper case
+set smartcase
+" Do not highlight column (speeds up highlighting)
+set nocursorcolumn
+" Do not highlight cursor (speeds up highlighting)
+set nocursorline
+" Indicate fast terminal conn for faster redraw
+set ttyfast
+" Indicate terminal type for mouse codes
+if (has('ttymouse'))
+    set ttymouse=xterm2
+endif
+
+" Speedup scrolling
+if (has('ttyscroll'))
+    set ttyscroll=3
+endif
+" Show status line always
+set laststatus=2
 " maintain undo history between session 
-set undofile                                                          
-set undodir=~/.vim/undodir
+" This enables us to undo files even if you exit Vim.
+if has('persistent_undo')
+    set undofile                                                          
+    set undodir=~/.vim/undodir
+endif
+
 " theme
 " better colors
 if (has("termguicolors"))
@@ -62,6 +86,10 @@ set hlsearch
 set incsearch								
 "Add simple highlight removal.
 nmap <Leader><space> :nohlsearch<cr>
+" Search mappings: These will make it so that going to the next one in a
+" search will center on the line it's found in.
+nnoremap n nzzzv
+nnoremap N Nzzzv
 
 " Split Management
 "Make splits default to below...
@@ -78,11 +106,22 @@ set dictionary+=/usr/share/dict/words
 set complete=.,w,b,u 							
 " onmicompletion out of the box for vim.
 set omnifunc=syntaxcomplete#Complete                                    
-"set completeopt=longest,menuone
+" Show popup menu, even if there is one entry
+set completeopt=menu,menuone
+" Completion window max size
+set pumheight=10
 "
 ""The default is \, but a SPACE is much better.
 " let mapleader = "\<Space>" 						 
 nmap <Space> <Leader>
+
+
+" Enter automatically into the files directory
+" autocmd BufEnter * silent! lcd %:p:h
+
+" per project vimrc
+set exrc
+" set secure
 
 "
 "
@@ -230,6 +269,13 @@ let g:lightline = {
       \   'gutentags': 'gutentags#statusline'
       \ },
       \ }
+" let g:lightline = {
+"       \ 'colorscheme': 'base16',
+"       \ 'component': {
+"         \   'helloworld': 'Hello, world!',
+"         \   'gutentags': 'gutentags#statusline()'
+"     \ },
+" \ }
 
 "
 "
@@ -364,9 +410,9 @@ let g:gutentags_ctags_exclude = ['*.css', '*.html', '*.js', '*.json', '*.xml',
 "
 let g:vdebug_options = {
     \ 'break_on_open': 0,
-    \ 'port': '9071'
+    \ 'port': '9009',
+    \ 'path_maps': {'/var/www/html': '/Users/samuel.tissot/hub/src/github.com/lightspeedretail/mkt-hq-website/website'},
     \ }
-    " \ 'path_maps': {'/var/www/html': '/Users/samuel.tissot/hub/src/github.com/lightspeedretail/mkt-backend-test'},
 
 "
 "
@@ -420,18 +466,52 @@ function! s:build_go_files()
     call go#cmd#Build(0)
   endif
 endfunction
-autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
-autocmd FileType go nmap <leader>r  <Plug>(go-run)
-autocmd FileType go nmap <Leader>i <Plug>(go-info)
+
+" syntax hightlight
 let g:go_fmt_command = "goimports"
-let g:go_auto_type_info = 1
-" beautify (may slow down vim)
+let g:go_autodetect_gopath = 1
+let g:go_list_type = "quickfix"
+
 let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
 let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_generate_tags = 1
+
+augroup go
+  autocmd!
+  " Show by default 4 spaces for a tab
+  autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
+  " :GoBuild and :GoTestCompile
+  autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
+  " :GoTest
+  autocmd FileType go nmap <leader>t  <Plug>(go-test)
+  " :GoRun
+  autocmd FileType go nmap <leader>r  <Plug>(go-run)
+  " :GoDoc
+  autocmd FileType go nmap <Leader>d <Plug>(go-doc)
+  " :GoCoverageToggle
+  autocmd FileType go nmap <Leader>c <Plug>(go-coverage-toggle)
+  " :GoInfo
+  autocmd FileType go nmap <Leader>i <Plug>(go-info)
+  " :GoMetaLinter
+  autocmd FileType go nmap <Leader>l <Plug>(go-metalinter)
+  " :GoDef but opens in a vertical split
+  autocmd FileType go nmap <Leader>v <Plug>(go-def-vertical)
+  " :GoDef but opens in a horizontal split
+  autocmd FileType go nmap <Leader>s <Plug>(go-def-split)
+  " :GoAlternate  commands :A, :AV, :AS and :AT
+  autocmd Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
+  autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
+  autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
+  autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
+augroup END
+
 " debug
 autocmd FileType go nmap <leader>dp :call GoToggleBreakpoint()
 autocmd FileType go nmap <leader>dr :call GoDebug()
+
 
 "
 "

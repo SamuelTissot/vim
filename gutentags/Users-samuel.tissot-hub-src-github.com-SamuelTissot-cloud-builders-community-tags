@@ -1,0 +1,9 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+cleanup	/Users/samuel.tissot/hub/src/github.com/SamuelTissot/cloud-builders-community/remote-builder/run-builder.sh	/^function cleanup {$/;"	f
+var_usage	/Users/samuel.tissot/hub/src/github.com/SamuelTissot/cloud-builders-community/helm/helm.bash	/^    function var_usage() {$/;"	f
+var_usage	/Users/samuel.tissot/hub/src/github.com/SamuelTissot/cloud-builders-community/kubectl_wait_for_job/kubectl_wait_for_job.bash	/^    function var_usage() {$/;"	f

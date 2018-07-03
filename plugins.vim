@@ -30,6 +30,12 @@ Plug 'tpope/vim-commentary'                                         " Comment st
 " Plug 'ervandew/supertab'                                            "  allows you to use <Tab> for all your insert completion
 Plug 'SirVer/ultisnips'                                             " alias / snippets
 Plug 'janko-m/vim-test'                                             " run tests
+Plug 'AndrewRadev/splitjoin.vim'                                    " switching between a single-line statement and a multi-line one split (join Go structs)
+"
+"
+"  ----------
+"  ----------  VIMWIKI  ----------
+Plug 'vimwiki/vimwiki'
 "
 "
 "  ----------
@@ -58,6 +64,7 @@ Plug 'joonty/vdebug'                                                " Xdebug
 "  ----------
 "  ----------  DATABASE  ----------
 Plug 'tpope/vim-dadbod'                                             " DB interaction
+Plug 'vim-scripts/dbext.vim'                                        " omni completion for sql
 "
 "
 "  ----------
