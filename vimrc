@@ -156,6 +156,9 @@ nmap <Leader>ev :tabedit $MYVIMRC<cr>
 nmap <Leader>es :e ~/.vim/snippets/
 nmap <leader>ep :tabedit ~/.vim/plugins.vim<cr>
 
+nmap <Leader>w :w<cr>
+nmap <Leader>q :q<cr>
+
 "To map <Esc> to exit terminal-mode:
 tnoremap <Esc> <C-\><C-n>
 
