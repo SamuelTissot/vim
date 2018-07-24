@@ -27,8 +27,7 @@ Plug 'tpope/vim-fugitive'                                           " Git awesom
 Plug 'tpope/vim-rhubarb'                                            " extension for vim awesoness
 Plug 'tpope/vim-vinegar'                                            " enhances netrw
 Plug 'tpope/vim-commentary'                                         " Comment stuff out. <gcc>
-" Plug 'ervandew/supertab'                                            "  allows you to use <Tab> for all your insert completion
-Plug 'SirVer/ultisnips'                                             " alias / snippets
+Plug 'ervandew/supertab'                                            "  allows you to use <Tab> for all your insert completion
 Plug 'janko-m/vim-test'                                             " run tests
 Plug 'AndrewRadev/splitjoin.vim'                                    " switching between a single-line statement and a multi-line one split (join Go structs)
 "
@@ -54,6 +53,8 @@ Plug 'skwp/greplace.vim'                                            " search and
 "  ----------
 "  ----------  COMPLETION  ----------
 Plug 'ludovicchabant/vim-gutentags'
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
 "
 "
 "  ----------
