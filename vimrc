@@ -7,6 +7,8 @@
 " -----------------------------------------------------------------------
   " BASE SETTINGS
 " -----------------------------------------------------------------------
+" per project vimrc
+set exrc
 " We want the latest Vim settings/options.
 set nocompatible              						
 syntax enable
@@ -115,13 +117,14 @@ set pumheight=10
 " let mapleader = "\<Space>" 						 
 nmap <Space> <Leader>
 
+"
+" window resize
+nmap <Leader><Left> :vertical resize +16<cr> 
+nmap <Leader><Right> :vertical resize -16<cr> 
 
 " Enter automatically into the files directory
 " autocmd BufEnter * silent! lcd %:p:h
 
-" per project vimrc
-set exrc
-" set secure
 
 "
 "
@@ -156,9 +159,6 @@ nmap <Leader>ev :tabedit $MYVIMRC<cr>
 nmap <Leader>es :e ~/.vim/snippets/
 nmap <leader>ep :tabedit ~/.vim/plugins.vim<cr>
 
-nmap <Leader>w :w<cr>
-nmap <Leader>q :q<cr>
-
 "To map <Esc> to exit terminal-mode:
 tnoremap <Esc> <C-\><C-n>
 
@@ -179,12 +179,6 @@ imap jj <Esc>
 
 "/ rename word under cursor
 nnoremap <Leader>rn :%s/\<<C-r><C-w>\>//g<Left><Left>
-
-"/ Ctags
-"Quickly browse to any tag/symbol in the project.
-"Tip: run ctags -R to regenerated the index.
-nmap <Leader>tf :tag<space>
-nmap <Leader>tg :!ctags -R
 
 "/ NERTW
 let g:netrw_banner = 1
@@ -255,30 +249,71 @@ if filereadable(expand("~/.vimrc_background"))
   source ~/.vimrc_background
 endif
 
+function! GitBranch()
+  return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
+endfunction
+
+function! StatuslineGit()
+    let git = fugitive#head()
+  if git != ''
+    return ''.fugitive#head()
+  else
+    return ''
+endfunction
+
+" Dictionary: take mode() input -> longer notation of current mode
+" mode() is defined by Vim
+let g:currentmode={ 'n' : 'Normal ', 'no' : 'N·Operator Pending ', 'v' : 'Visual ', 'V' : 'V·Line ', '^V' : 'V·Block ', 's' : 'Select ', 'S': 'S·Line ', '^S' : 'S·Block ', 'i' : 'Insert ', 'R' : 'Replace ', 'Rv' : 'V·Replace ', 'c' : 'Command ', 'cv' : 'Vim Ex ', 'ce' : 'Ex ', 'r' : 'Prompt ', 'rm' : 'More ', 'r?' : 'Confirm ', '!' : 'Shell ', 't' : 'Terminal '}
+
+" Function: return current mode
+" abort -> function will abort soon as error detected
+function! ModeCurrent() abort
+    let l:modecurrent = mode()
+    " use get() -> fails safely, since ^V doesn't seem to register
+    " 3rd arg is used when return of mode() == 0, which is case with ^V
+    " thus, ^V fails -> returns 0 -> replaced with 'V Block'
+    let l:modelist = toupper(get(g:currentmode, l:modecurrent, 'V·Block '))
+    let l:current_status_mode = l:modelist
+    return l:current_status_mode
+endfunction
+
+set statusline=
+set statusline+=%#PmenuSel#
+set statusline+=\ 
+set statusline+=%{StatuslineGit()}
+set statusline+=\ 
+set statusline+=%#LineNr#
+set statusline+=\ %f
+set statusline+=\ %m
+set statusline+=\ %r
+set statusline+=%=
+set statusline+=\ %#CursorColumn#
+set statusline+=\ %y
+set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
+set statusline+=\ [%{&fileformat}\]
+set statusline+=\ %p%%
+set statusline+=\ %l:%c
+set statusline+=\ %#PmenuSel#
+set statusline+=\ %{ModeCurrent()}
+set statusline+=\ 
+
+
 "
 " itchyny/lightline.vim
 " 
-let g:lightline = {
-      \ 'colorscheme': 'base16',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'readonly', 'gitbranch', 'modified', 'filename' ] ],
-      \   'right': [ [ 'lineinfo' ],
-      \              [ 'percent' ],
-      \              [ 'fileformat', 'fileencoding', 'filetype', 'gutentags' ] ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'fugitive#head',
-      \   'gutentags': 'gutentags#statusline'
-      \ },
-      \ }
 " let g:lightline = {
 "       \ 'colorscheme': 'base16',
-"       \ 'component': {
-"         \   'helloworld': 'Hello, world!',
-"         \   'gutentags': 'gutentags#statusline()'
-"     \ },
-" \ }
+"       \ 'active': {
+"       \   'left': [ [ 'mode', 'paste' ],
+"       \             [ 'readonly', 'gitbranch', 'modified', 'filename' ] ],
+"       \   'right': [ [ 'lineinfo' ],
+"       \              [ 'percent' ],
+"       \              [ 'fileformat', 'fileencoding', 'filetype'] ]
+"       \ },
+"       \ 'component_function': {
+"       \   'gitbranch': 'fugitive#head',
+"       \ },
+"       \ }
 
 "
 "
@@ -391,31 +426,64 @@ let g:grep_cmd_opts = '--line-numbers --noheading'
 "
 "
 "  ----------
+"  ----------  UNDO  ----------
+"
+nnoremap U :UndotreeToggle<cr>
+
+
+"
+"
+"  ----------
 "  ----------  COMPLETION  ----------
 "
 " ludovicchabant/vimgutentags
 "
 " add >> --PHP-kinds=+cfit-va << to you ~/.ctags
 " This way I get tags for classes, interfaces, functions, namespaces and traits, while variables and aliases are ignored to remove the noise level.
+au FileType gitcommit,gitrebase let g:gutentags_enabled=0
 let g:gutentags_cache_dir = '~/.vim/gutentags'
 let g:gutentags_ctags_exclude = ['*.css', '*.html', '*.js', '*.json', '*.xml',
                             \ '*.phar', '*.ini', '*.rst', '*.md',
                             \ '*vendor/*/test*', '*vendor/*/Test*',
                             \ '*vendor/*/fixture*', '*vendor/*/Fixture*',
                             \ '*var/cache*', '*var/log*']
+" let g:gutentags_ctags_tagfile = '.tags'
+let g:gutentags_file_list_command = {
+      \ 'markers': {
+      \ '.git': 'git ls-files',
+      \ },
+      \ }
+let g:gutentags_generate_on_new = 1
+
+
+let g:deoplete#enable_at_startup = 1
+
+" Plugin key-mappings.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <S-Tab>     <Plug>(neosnippet_expand_or_jump)
+smap <S-Tab>     <Plug>(neosnippet_expand_or_jump)
+xmap <S-Tab>     <Plug>(neosnippet_expand_target)
+
+" SuperTab like snippets behavior.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+"imap <expr><TAB>
+" \ pumvisible() ? "\<C-n>" :
+" \ neosnippet#expandable_or_jumpable() ?
+" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" For conceal markers.
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
+endif
 
 "
 "
 "  ----------
 "  ----------  DEBUGING  ----------
 "
-" joonty/vdebug
-"
-let g:vdebug_options = {
-    \ 'break_on_open': 0,
-    \ 'port': '9009',
-    \ 'path_maps': {'/var/www/html': '/Users/samuel.tissot/hub/src/github.com/lightspeedretail/mkt-hq-website/website'},
-    \ }
+" set configs in directory .nvimrc
 
 "
 "
@@ -452,7 +520,12 @@ autocmd FileType php noremap <Leader>pc :call PhpExpandClass()<CR>
 " 
 nnoremap <leader>d :call pdv#DocumentWithSnip()<CR>
 let g:pdv_template_dir = $HOME ."/.vim/bundle/pdv/templates_snip"
- 
+
+" 
+" format code
+"
+autocmd FileType php noremap <Leader>b :!php-cs-fixer fix %<CR>
+
 "
 "
 "  ----------
@@ -564,31 +637,4 @@ endfunction
 nmap <Leader>sc :call CallAntidoteSpellCheck()<CR>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
+set secure
