@@ -65,8 +65,13 @@ set laststatus=2
 " This enables us to undo files even if you exit Vim.
 if has('persistent_undo')
     set undofile                                                          
-    set undodir=~/.vim/undodir
+    set undodir=~/.vim/undodir//
 endif
+
+set backup
+set backupdir=~/.vim/backup//
+
+set dir=~/.vim/swp//
 
 " theme
 " better colors
@@ -396,8 +401,8 @@ nmap <Leader>fb :Buffers<cr>
 nmap <Leader>fh :History<cr> 
 nmap <Leader>ff :GFiles<cr> 
 nmap <Leader>fF :Files<cr> 
-nmap <Leader>ft :BTags<cr>
-nmap <Leader>fT :Tags<cr> 
+nmap <Leader>fT :BTags<cr>
+nmap <Leader>ft :Tags<cr> 
 nmap <Leader>fl :BLines<cr>
 nmap <Leader>fL :Lines<cr>
 nmap <Leader>f' :Marks<cr>
@@ -408,6 +413,8 @@ nmap <Leader>f: :History:<CR>
 nmap <Leader>f/ :History/<CR>
 nmap <Leader>fM :Maps<CR>
 nmap <Leader>fs :Filetypes<CR>
+nmap <Leader>fV :Commits<CR>
+nmap <Leader>fv :BCommits<CR>
 
 "
 " mileszs/ack.vim

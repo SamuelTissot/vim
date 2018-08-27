@@ -68,8 +68,8 @@ Plug 'joonty/vdebug'                                                " Xdebug
 "
 "  ----------
 "  ----------  DATABASE  ----------
-Plug 'tpope/vim-dadbod'                                             " DB interaction
-Plug 'vim-scripts/dbext.vim'                                        " omni completion for sql
+Plug 'tpope/vim-dadbod', { 'for': 'sql' }                             " DB interaction
+Plug 'vim-scripts/dbext.vim',  { 'for': 'sql' }                       " omni completion for sql
 "
 "
 "  ----------
@@ -77,6 +77,7 @@ Plug 'vim-scripts/dbext.vim'                                        " omni compl
 Plug 'shawncplus/phpcomplete.vim', { 'for': 'php' }
 Plug 'arnaud-lb/vim-php-namespace', { 'for': 'php' }                " PHP inserting use statements
 Plug 'tobyS/pdv', { 'for': 'php' }                                  " PHP Documentor for VIM
+Plug 'alvan/vim-php-manual', { 'for': 'php' }                       " PHP documentation for vim
 "
 "
 "  ----------

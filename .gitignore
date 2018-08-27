@@ -1,4 +1,4 @@
-undodir/
+undodir/*
 /bundle
 /colors
 *.swp
@@ -6,3 +6,5 @@ undodir/
 gutentags/
 sessions/
 sessions/*
+backup/*
+swap/*
