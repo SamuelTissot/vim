@@ -7,6 +7,34 @@
 " -----------------------------------------------------------------------
   " BASE SETTINGS
 " -----------------------------------------------------------------------
+"
+" VIM special character notation
+"
+" <BS>           Backspace
+" <Tab>          Tab
+" <CR>           Enter
+" <Enter>        Enter
+" <Return>       Enter
+" <Esc>          Escape
+" <Space>        Space
+" <Up>           Up arrow
+" <Down>         Down arrow
+" <Left>         Left arrow
+" <Right>        Right arrow
+" <F1> - <F12>   Function keys 1 to 12
+" #1, #2..#9,#0  Function keys F1 to F9, F10
+" <Insert>       Insert
+" <Del>          Delete
+" <Home>         Home
+" <End>          End
+" <PageUp>       Page-Up
+" <PageDown>     Page-Down
+" <bar>          the '|' character, which otherwise needs to be escaped '\|'
+"
+"
+"
+"
+"
 " per project vimrc
 set exrc
 " We want the latest Vim settings/options.
@@ -416,6 +444,7 @@ nmap <Leader>fs :Filetypes<CR>
 nmap <Leader>fV :Commits<CR>
 nmap <Leader>fv :BCommits<CR>
 
+
 "
 " mileszs/ack.vim
 "                                              
@@ -442,27 +471,6 @@ nnoremap U :UndotreeToggle<cr>
 "
 "  ----------
 "  ----------  COMPLETION  ----------
-"
-" ludovicchabant/vimgutentags
-"
-" add >> --PHP-kinds=+cfit-va << to you ~/.ctags
-" This way I get tags for classes, interfaces, functions, namespaces and traits, while variables and aliases are ignored to remove the noise level.
-au FileType gitcommit,gitrebase let g:gutentags_enabled=0
-let g:gutentags_cache_dir = '~/.vim/gutentags'
-let g:gutentags_ctags_exclude = ['*.css', '*.html', '*.js', '*.json', '*.xml',
-                            \ '*.phar', '*.ini', '*.rst', '*.md',
-                            \ '*vendor/*/test*', '*vendor/*/Test*',
-                            \ '*vendor/*/fixture*', '*vendor/*/Fixture*',
-                            \ '*var/cache*', '*var/log*']
-" let g:gutentags_ctags_tagfile = '.tags'
-let g:gutentags_file_list_command = {
-      \ 'markers': {
-      \ '.git': 'git ls-files',
-      \ },
-      \ }
-let g:gutentags_generate_on_new = 1
-
-
 let g:deoplete#enable_at_startup = 1
 
 " Plugin key-mappings.
@@ -527,6 +535,11 @@ autocmd FileType php noremap <Leader>pc :call PhpExpandClass()<CR>
 " 
 nnoremap <leader>d :call pdv#DocumentWithSnip()<CR>
 let g:pdv_template_dir = $HOME ."/.vim/bundle/pdv/templates_snip"
+
+"
+" alvan/vim-php-manual
+" 
+let g:php_manual_online_search_shortcut = '<Leader>ph'
 
 " 
 " format code
