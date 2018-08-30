@@ -15,7 +15,7 @@ Plug 'Yggdroot/indentLine'                                          " indentatio
 "
 "  ----------
 "  ----------  SYNTAX  ----------
-Plug 'sheerun/vim-polyglot'                                         " language pack
+" Plug 'sheerun/vim-polyglot'                                         " language pack
 Plug 'evidens/vim-twig', {'for': ['html', 'twig']}                  " Twig HTML
 "
 "
@@ -55,10 +55,11 @@ Plug 'skwp/greplace.vim'                                            " search and
 "
 "  ----------
 "  ----------  COMPLETION  ----------
-" Plug 'ludovicchabant/vim-gutentags'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'Shougo/neosnippet.vim'
+" Plug 'Shougo/neosnippet-snippets'
+Plug 'lifepillar/vim-mucomplete'
+"
 "
 "
 "  ----------
@@ -82,7 +83,7 @@ Plug 'alvan/vim-php-manual', { 'for': 'php' }                       " PHP docume
 "
 "  ----------
 "  ----------  GOLANG  ----------
-Plug 'fatih/vim-go', { 'for': 'go', 'do': 'GoInstallBinaries' }     " Golang awesomness
+Plug 'fatih/vim-go', { 'do': 'GoInstallBinaries' }     " Golang awesomness
 "
 "
 "  ----------

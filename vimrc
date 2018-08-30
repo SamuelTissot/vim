@@ -142,7 +142,9 @@ set complete=.,w,b,u
 " onmicompletion out of the box for vim.
 set omnifunc=syntaxcomplete#Complete                                    
 " Show popup menu, even if there is one entry
-set completeopt=menu,menuone
+set completeopt=menuone
+set completeopt+=menu
+set completeopt+=noselect
 " Completion window max size
 set pumheight=10
 "
@@ -471,28 +473,8 @@ nnoremap U :UndotreeToggle<cr>
 "
 "  ----------
 "  ----------  COMPLETION  ----------
-let g:deoplete#enable_at_startup = 1
-
-" Plugin key-mappings.
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-imap <S-Tab>     <Plug>(neosnippet_expand_or_jump)
-smap <S-Tab>     <Plug>(neosnippet_expand_or_jump)
-xmap <S-Tab>     <Plug>(neosnippet_expand_target)
-
-" SuperTab like snippets behavior.
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-"imap <expr><TAB>
-" \ pumvisible() ? "\<C-n>" :
-" \ neosnippet#expandable_or_jumpable() ?
-" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
-" For conceal markers.
-if has('conceal')
-  set conceallevel=2 concealcursor=niv
-endif
-
+let g:mucomplete#enable_auto_at_startup = 1
+let g:mucomplete#delayed_completion = 1
 "
 "
 "  ----------
@@ -553,7 +535,7 @@ autocmd FileType php noremap <Leader>b :!php-cs-fixer fix %<CR>
 "
 " fatih/vim-go'
 " 
-" run :GoBuild or :GoTestCompile based on the go file
+run :GoBuild or :GoTestCompile based on the go file
 function! s:build_go_files()
   let l:file = expand('%')
   if l:file =~# '^\f\+_test\.go$'
