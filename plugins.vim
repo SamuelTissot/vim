@@ -15,7 +15,7 @@ Plug 'Yggdroot/indentLine'                                          " indentatio
 "
 "  ----------
 "  ----------  SYNTAX  ----------
-" Plug 'sheerun/vim-polyglot'                                         " language pack
+Plug 'sheerun/vim-polyglot'                                         " language pack
 Plug 'evidens/vim-twig', {'for': ['html', 'twig']}                  " Twig HTML
 "
 "
