@@ -5,10 +5,7 @@ call plug#begin('~/.vim/bundle')
 "
 " ----------
 " ----------  THEME  ----------
-" Plug 'itchyny/lightline.vim'                                        " status line
 Plug 'chriskempson/base16-vim'
-" Plug 'daviesjamie/vim-base16-lightline'
-" Plug 'mark-westerhof/vim-lightline-base16'
 Plug 'Yggdroot/indentLine'                                          " indentation markers
 
 "
@@ -29,15 +26,9 @@ Plug 'tpope/vim-fugitive'                                           " Git awesom
 Plug 'tpope/vim-rhubarb'                                            " extension for vim awesoness
 Plug 'tpope/vim-vinegar'                                            " enhances netrw
 Plug 'tpope/vim-commentary'                                         " Comment stuff out. <gcc>
-" Plug 'ervandew/supertab'                                            "  allows you to use <Tab> for all your insert completion
 Plug 'janko-m/vim-test'                                             " run tests
 Plug 'AndrewRadev/splitjoin.vim'                                    " switching between a single-line statement and a multi-line one split (join Go structs)
 Plug 'mbbill/undotree'                                              " Undo tree on steroid
-"
-"
-"  ----------
-"  ----------  VIMWIKI  ----------
-Plug 'vimwiki/vimwiki'
 "
 "
 "  ----------
@@ -58,7 +49,6 @@ Plug 'skwp/greplace.vim'                                            " search and
 " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'Shougo/neosnippet.vim'
 " Plug 'Shougo/neosnippet-snippets'
-Plug 'lifepillar/vim-mucomplete'
 "
 "
 "
