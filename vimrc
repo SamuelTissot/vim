@@ -140,7 +140,7 @@ set dictionary+=/usr/share/dict/words
 "Set our desired autocompletion matching.
 set complete=.,w,b,u 							
 " onmicompletion out of the box for vim.
-set omnifunc=syntaxcomplete#Complete                                    
+set completeopt=noinsert,menuone,noselect
 " Show popup menu, even if there is one entry
 set completeopt=menu,menuone
 " Completion window max size
@@ -472,27 +472,12 @@ nnoremap U :UndotreeToggle<cr>
 "
 "  ----------
 "  ----------  COMPLETION  ----------
-let g:deoplete#enable_at_startup = 1
-
-" Plugin key-mappings.
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
-
-" SuperTab like snippets behavior.
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-"imap <expr><TAB>
-" \ pumvisible() ? "\<C-n>" :
-" \ neosnippet#expandable_or_jumpable() ?
-" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
-" For conceal markers.
-if has('conceal')
-  set conceallevel=2 concealcursor=niv
-endif
+autocmd BufEnter * call ncm2#enable_for_buffer()
+set shortmess+=c
+let g:LanguageClient_serverCommands = {
+  \ 'php': 'php $HOME/.composer/vendor/felixfbecker/language-server/bin/php-language-server.php',
+  \ 'go' : 'go-langserver'
+  \ }
 
 "
 "
