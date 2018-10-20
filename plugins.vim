@@ -37,6 +37,11 @@ Plug 'w0rp/ale'                                                     " Ale lintin
 "
 "
 "  ----------
+"  ----------  Management  ----------
+Plug 'vim-scripts/todo-txt.vim'                                     " todo-txt
+"
+"
+"  ----------
 "  ----------  SEARCH  ----------
 Plug '/usr/local/opt/fzf'                                           " serach everything
 Plug 'junegunn/fzf.vim'                                             " search everything

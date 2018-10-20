@@ -189,8 +189,9 @@ nmap <CR> o<Esc>
 
 "Make it easy to edit the Vimrc file.
 nmap <Leader>ev :tabedit $MYVIMRC<cr>
-nmap <Leader>es :e ~/.vim/snippets/
-nmap <leader>ep :tabedit ~/.vim/plugins.vim<cr>
+nmap <Leader>es :tabedit $MYVIMRC/snippets/
+nmap <leader>ep :tabedit $MYVIMRC/plugins.vim<cr>
+nmap <leader>et :tabedit $TODO_DIR/todo.txt<cr>
 
 "To map <Esc> to exit terminal-mode:
 tnoremap <Esc> <C-\><C-n>
@@ -475,9 +476,9 @@ let g:deoplete#enable_at_startup = 1
 
 " Plugin key-mappings.
 " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-imap <S-Tab>     <Plug>(neosnippet_expand_or_jump)
-smap <S-Tab>     <Plug>(neosnippet_expand_or_jump)
-xmap <S-Tab>     <Plug>(neosnippet_expand_target)
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
 
 " SuperTab like snippets behavior.
 " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
