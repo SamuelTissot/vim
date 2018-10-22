@@ -52,16 +52,15 @@ Plug 'skwp/greplace.vim'                                            " search and
 "  ----------
 "  ----------  COMPLETION  ----------
 "
-Plug 'roxma/nvim-yarp'                                              " A dependency of 'ncm2'.
-Plug 'ncm2/ncm2'                                                    " v2 of the nvim-completion-manager.
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-tmux'
-Plug 'ncm2/ncm2-path'
-" LanguageServer client for NeoVim.
-Plug 'autozimu/LanguageClient-neovim', {
-  \ 'branch': 'next',
-  \ 'do': 'bash install.sh',
-  \ }
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'felixfbecker/php-language-server', {'do': 'composer install && composer run-script parse-stubs'}
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'yami-beta/asyncomplete-omni.vim'
+Plug 'prabirshrestha/asyncomplete-file.vim'
+Plug 'prabirshrestha/asyncomplete-tags.vim'
+
 
 "
 "

@@ -141,8 +141,6 @@ set dictionary+=/usr/share/dict/words
 set complete=.,w,b,u 							
 " onmicompletion out of the box for vim.
 set completeopt=noinsert,menuone,noselect
-" Show popup menu, even if there is one entry
-set completeopt=menu,menuone
 " Completion window max size
 set pumheight=10
 "
@@ -472,13 +470,50 @@ nnoremap U :UndotreeToggle<cr>
 "
 "  ----------
 "  ----------  COMPLETION  ----------
-autocmd BufEnter * call ncm2#enable_for_buffer()
-set shortmess+=c
-let g:LanguageClient_serverCommands = {
-  \ 'php': 'php $HOME/.composer/vendor/felixfbecker/language-server/bin/php-language-server.php',
-  \ 'go' : 'go-langserver'
-  \ }
+" asyncomplete.vim
+let g:asyncomplete_smart_completion = 1
+let g:asyncomplete_auto_popup = 1
+let g:asyncomplete_remove_duplicates = 1
+"  enable preview window
+set completeopt+=preview
+" To auto close preview window when completion is done.
+autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 
+" language server
+" prabirshrestha/vim-lsp
+au User lsp_setup call lsp#register_server({                                    
+     \ 'name': 'php-language-server',                                            
+     \ 'cmd': {server_info->['php', expand('~/.vim/bundle/php-language-server/bin/php-language-server.php')]},
+     \ 'whitelist': ['php'],                                                     
+     \ })
+
+" omni
+call asyncomplete#register_source(asyncomplete#sources#omni#get_source_options({
+    \ 'name': 'omni',
+    \ 'whitelist': ['*'],
+    \ 'blacklist': ['php'],
+    \ 'priority': 10,
+    \ 'completor': function('asyncomplete#sources#omni#completor')
+    \  }))
+
+" tag
+au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#tags#get_source_options({
+    \ 'name': 'tags',
+    \ 'whitelist': ['php'],
+    \ 'completor': function('asyncomplete#sources#tags#completor'),
+    \ 'priority': 5,
+    \ 'config': {
+    \    'max_file_size': 50000000,
+    \  },
+    \ }))
+
+" path
+au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
+    \ 'name': 'file',
+    \ 'whitelist': ['*'],
+    \ 'priority': 10,
+    \ 'completor': function('asyncomplete#sources#file#completor')
+    \ }))
 "
 "
 "  ----------
